@@ -1,0 +1,641 @@
+{
+ "source": "https://starcitizen.tools/Emotes",
+ "emotes": [
+  {
+   "cmd": "/atease",
+   "name": "Standing at ease",
+   "cat": "Greetings",
+   "base": "atease"
+  },
+  {
+   "cmd": "/attention",
+   "name": "Standing at attention",
+   "cat": "Greetings",
+   "base": "attention"
+  },
+  {
+   "cmd": "/bow1",
+   "name": "Curtsy",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/bow2",
+   "name": "Slight bow with courtesy wave",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/bow3",
+   "name": "Deep curtsy",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/bow4",
+   "name": "Deep bow with courtesy wave",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/bow5",
+   "name": "Extra-low curtsy",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/bow6",
+   "name": "Exaggerated bow",
+   "cat": "Greetings",
+   "base": "bow"
+  },
+  {
+   "cmd": "/come1",
+   "name": "High beckon",
+   "cat": "Greetings",
+   "base": "come"
+  },
+  {
+   "cmd": "/come2",
+   "name": "Aggressive summon",
+   "cat": "Greetings",
+   "base": "come"
+  },
+  {
+   "cmd": "/come3",
+   "name": "Angry point to floor",
+   "cat": "Greetings",
+   "base": "come"
+  },
+  {
+   "cmd": "/come4",
+   "name": "Single-finger beckon",
+   "cat": "Greetings",
+   "base": "come"
+  },
+  {
+   "cmd": "/greet1",
+   "name": "Left-hand wave",
+   "cat": "Greetings",
+   "base": "greet"
+  },
+  {
+   "cmd": "/greet2",
+   "name": "Low-to-high hand greeting",
+   "cat": "Greetings",
+   "base": "greet"
+  },
+  {
+   "cmd": "/point1",
+   "name": "Left-hand point",
+   "cat": "Greetings",
+   "base": "point"
+  },
+  {
+   "cmd": "/point2",
+   "name": "Right-hand point",
+   "cat": "Greetings",
+   "base": "point"
+  },
+  {
+   "cmd": "/point3",
+   "name": "Right-hand shake and point",
+   "cat": "Greetings",
+   "base": "point"
+  },
+  {
+   "cmd": "/point4",
+   "name": "Left-hand shake and point",
+   "cat": "Greetings",
+   "base": "point"
+  },
+  {
+   "cmd": "/salute1",
+   "name": "Simple salute",
+   "cat": "Greetings",
+   "base": "salute"
+  },
+  {
+   "cmd": "/salute2",
+   "name": "Slow salute",
+   "cat": "Greetings",
+   "base": "salute"
+  },
+  {
+   "cmd": "/wait1",
+   "name": "Hand up to wait",
+   "cat": "Greetings",
+   "base": "wait"
+  },
+  {
+   "cmd": "/wait2",
+   "name": "Time-out sign",
+   "cat": "Greetings",
+   "base": "wait"
+  },
+  {
+   "cmd": "/wave1",
+   "name": "Right-hand wave",
+   "cat": "Greetings",
+   "base": "wave"
+  },
+  {
+   "cmd": "/wave2",
+   "name": "Two-finger salute",
+   "cat": "Greetings",
+   "base": "wave"
+  },
+  {
+   "cmd": "/agree",
+   "name": "Thumbs-up",
+   "cat": "Reactions",
+   "base": "agree"
+  },
+  {
+   "cmd": "/angry1",
+   "name": "Fist-slam and point",
+   "cat": "Reactions",
+   "base": "angry"
+  },
+  {
+   "cmd": "/angry2",
+   "name": "Raised-fist strike",
+   "cat": "Reactions",
+   "base": "angry"
+  },
+  {
+   "cmd": "/angry3",
+   "name": "Stomp and flail",
+   "cat": "Reactions",
+   "base": "angry"
+  },
+  {
+   "cmd": "/blah1",
+   "name": "Blah, one hand",
+   "cat": "Reactions",
+   "base": "blah"
+  },
+  {
+   "cmd": "/blah2",
+   "name": "Blah, both hands",
+   "cat": "Reactions",
+   "base": "blah"
+  },
+  {
+   "cmd": "/bored1",
+   "name": "Bored, arm stretch",
+   "cat": "Reactions",
+   "base": "bored"
+  },
+  {
+   "cmd": "/bored2",
+   "name": "Bored, crossed arms",
+   "cat": "Reactions",
+   "base": "bored"
+  },
+  {
+   "cmd": "/burp",
+   "name": "Burp",
+   "cat": "Reactions",
+   "base": "burp"
+  },
+  {
+   "cmd": "/chicken",
+   "name": "Dismissive wave, chicken wings",
+   "cat": "Reactions",
+   "base": "chicken"
+  },
+  {
+   "cmd": "/cry",
+   "name": "Crying",
+   "cat": "Reactions",
+   "base": "cry"
+  },
+  {
+   "cmd": "/failure",
+   "name": "Kick sand",
+   "cat": "Reactions",
+   "base": "failure"
+  },
+  {
+   "cmd": "/gasp1",
+   "name": "Gasp, right hand to face",
+   "cat": "Reactions",
+   "base": "gasp"
+  },
+  {
+   "cmd": "/gasp2",
+   "name": "Gasp, right hand to face (variant)",
+   "cat": "Reactions",
+   "base": "gasp"
+  },
+  {
+   "cmd": "/gasp3",
+   "name": "Gasp, both hands to face",
+   "cat": "Reactions",
+   "base": "gasp"
+  },
+  {
+   "cmd": "/gasp4",
+   "name": "Gasp, both hands, dip",
+   "cat": "Reactions",
+   "base": "gasp"
+  },
+  {
+   "cmd": "/gasp5",
+   "name": "Shocked step back",
+   "cat": "Reactions",
+   "base": "gasp"
+  },
+  {
+   "cmd": "/laugh1",
+   "name": "Big exaggerated laugh",
+   "cat": "Reactions",
+   "base": "laugh"
+  },
+  {
+   "cmd": "/laugh2",
+   "name": "Laugh and groan",
+   "cat": "Reactions",
+   "base": "laugh"
+  },
+  {
+   "cmd": "/laugh3",
+   "name": "Belly laugh and point",
+   "cat": "Reactions",
+   "base": "laugh"
+  },
+  {
+   "cmd": "/smell1",
+   "name": "Nose wave",
+   "cat": "Reactions",
+   "base": "smell"
+  },
+  {
+   "cmd": "/smell2",
+   "name": "Shocked nose wave",
+   "cat": "Reactions",
+   "base": "smell"
+  },
+  {
+   "cmd": "/cheer1",
+   "name": "Bull-horn wave",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer2",
+   "name": "Double fist wave",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer3",
+   "name": "Right fist pump",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer4",
+   "name": "Repeated right fist pumps",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer5",
+   "name": "Left fist pumps",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer6",
+   "name": "Raised right fist",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer7",
+   "name": "Raised fist, many pumps",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/cheer8",
+   "name": "Raised fist, pumps, small hop",
+   "cat": "Celebrate",
+   "base": "cheer"
+  },
+  {
+   "cmd": "/clap1",
+   "name": "Long overhead clap",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap2",
+   "name": "Overhead clap",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap3",
+   "name": "Slow clap at face",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap4",
+   "name": "Slow clap at chest",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap5",
+   "name": "Fast clap at face",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap6",
+   "name": "Gentle clap near head",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/clap7",
+   "name": "Heavy clap at face",
+   "cat": "Celebrate",
+   "base": "clap"
+  },
+  {
+   "cmd": "/dance1",
+   "name": "Subtle head-bob sway",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/dance2",
+   "name": "Energetic arm-thrust sway",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/dance3",
+   "name": "Head-bob and sway",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/dance4",
+   "name": "Head-bob and sway (variant)",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/dance5",
+   "name": "Chicken-wing dance",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/dance6",
+   "name": "Short jig",
+   "cat": "Celebrate",
+   "base": "dance"
+  },
+  {
+   "cmd": "/flex1",
+   "name": "Right arm flex",
+   "cat": "Celebrate",
+   "base": "flex"
+  },
+  {
+   "cmd": "/flex2",
+   "name": "Double flex, fists up",
+   "cat": "Celebrate",
+   "base": "flex"
+  },
+  {
+   "cmd": "/flex3",
+   "name": "Pointing flex finish",
+   "cat": "Celebrate",
+   "base": "flex"
+  },
+  {
+   "cmd": "/flirt",
+   "name": "Blow a kiss",
+   "cat": "Celebrate",
+   "base": "flirt"
+  },
+  {
+   "cmd": "/gloat1",
+   "name": "Hip and shoulder shake",
+   "cat": "Celebrate",
+   "base": "gloat"
+  },
+  {
+   "cmd": "/gloat2",
+   "name": "Hands on sides, look around",
+   "cat": "Celebrate",
+   "base": "gloat"
+  },
+  {
+   "cmd": "/gloat3",
+   "name": "Thumbs in belt, look around",
+   "cat": "Celebrate",
+   "base": "gloat"
+  },
+  {
+   "cmd": "/gloat4",
+   "name": "Thumbs in belt, head shake",
+   "cat": "Celebrate",
+   "base": "gloat"
+  },
+  {
+   "cmd": "/whistle1",
+   "name": "Finger whistle",
+   "cat": "Celebrate",
+   "base": "whistle"
+  },
+  {
+   "cmd": "/whistle2",
+   "name": "Two-hand whistle",
+   "cat": "Celebrate",
+   "base": "whistle"
+  },
+  {
+   "cmd": "/rude1",
+   "name": "Chin slide",
+   "cat": "Taunts",
+   "base": "rude"
+  },
+  {
+   "cmd": "/rude2",
+   "name": "Double middle finger",
+   "cat": "Taunts",
+   "base": "rude"
+  },
+  {
+   "cmd": "/rude3",
+   "name": "Middle finger flip",
+   "cat": "Taunts",
+   "base": "rude"
+  },
+  {
+   "cmd": "/threaten1",
+   "name": "Throat slash",
+   "cat": "Taunts",
+   "base": "threaten"
+  },
+  {
+   "cmd": "/threaten2",
+   "name": "Knuckle snap",
+   "cat": "Taunts",
+   "base": "threaten"
+  },
+  {
+   "cmd": "/sit",
+   "name": "Sit, arms around knees",
+   "cat": "Poses",
+   "base": "sit"
+  },
+  {
+   "cmd": "/sleep",
+   "name": "Lie down and sleep",
+   "cat": "Poses",
+   "base": "sleep"
+  },
+  {
+   "cmd": "/stand",
+   "name": "Stand up",
+   "cat": "Poses",
+   "base": "stand"
+  },
+  {
+   "cmd": "/asl_angry",
+   "name": "ASL: anger",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_blah1",
+   "name": "ASL: blah, blah, blah",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_blah2",
+   "name": "ASL: blah (variant)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_bored",
+   "name": "ASL: boredom",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_bullshit",
+   "name": "ASL: bullshit",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_canthear",
+   "name": "ASL: can't hear you",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_exhausted",
+   "name": "ASL: exhaustion",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_goodbye",
+   "name": "ASL: goodbye",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_hello",
+   "name": "ASL: hello",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_loveyou",
+   "name": "ASL: love you",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_meetyou",
+   "name": "ASL: nice to meet you",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_no1",
+   "name": "ASL: no (polite)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_no2",
+   "name": "ASL: no (firm)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_sad",
+   "name": "ASL: sadness",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_sitdown1",
+   "name": "ASL: sit (polite)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_sitdown2",
+   "name": "ASL: sit (firm)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_thanks1",
+   "name": "ASL: thanks",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_thanks2",
+   "name": "ASL: thanks (sarcastic)",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_upset",
+   "name": "ASL: upset",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_yes1",
+   "name": "ASL: yes",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  },
+  {
+   "cmd": "/asl_yes2",
+   "name": "ASL: yes, please",
+   "cat": "Sign language (ASL)",
+   "base": "asl"
+  }
+ ]
+}

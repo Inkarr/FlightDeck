@@ -1,0 +1,164 @@
+{
+ "tap": {
+  "onPress": "0",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "0.25",
+  "holdTriggerDelay": null
+ },
+ "double_tap": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "2",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "double_tap_nonblocking": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "2",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "tap_quicker": {
+  "onPress": "0",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "0.15",
+  "holdTriggerDelay": null
+ },
+ "press": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "press_quicker": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "0.15",
+  "holdTriggerDelay": null
+ },
+ "delayed_press": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "1",
+  "pressTriggerThreshold": "0.25",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_press_quicker": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "1",
+  "pressTriggerThreshold": "0.15",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_press_medium": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "1",
+  "pressTriggerThreshold": "0.5",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_press_long": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "0",
+  "multiTap": "1",
+  "pressTriggerThreshold": "1.5",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "hold": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "hold_no_retrigger": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "all": {
+  "onPress": "1",
+  "onHold": "1",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_hold": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "0.25",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_hold_long": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "1.5",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "delayed_hold_no_retrigger": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "0.15",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "hold_toggle": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ },
+ "smart_toggle": {
+  "onPress": "1",
+  "onHold": "0",
+  "onRelease": "1",
+  "multiTap": "1",
+  "pressTriggerThreshold": "-1",
+  "releaseTriggerThreshold": "-1",
+  "holdTriggerDelay": null
+ }
+}

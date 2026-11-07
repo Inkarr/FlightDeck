@@ -1,0 +1,1467 @@
+{
+  "title": "FLIGHTDECK",
+  "subtitle": "Star Citizen",
+  "port": 8765,
+  "pin": "",
+  "scPath": "",
+  "chatKey": "enter",
+  "pages": [
+    {
+      "name": "Flight",
+      "groups": [
+        {
+          "name": "Flight Systems",
+          "buttons": [
+            {
+              "id": "decoupled",
+              "label": "Decoupled",
+              "sc": "v_ifcs_vector_decoupling_toggle",
+              "toggle": true
+            },
+            {
+              "id": "gsafe",
+              "label": "G-Safe",
+              "sc": "v_ifcs_toggle_gforce_safety",
+              "keys": "lctrl+g",
+              "toggle": true
+            },
+            {
+              "id": "esp",
+              "label": "ESP",
+              "sc": "v_ifcs_toggle_esp",
+              "keys": "lctrl+e",
+              "toggle": true
+            },
+            {
+              "id": "cruise",
+              "label": "Cruise Throttle",
+              "sc": "v_ifcs_throttle_swap_mode",
+              "toggle": true
+            },
+            {
+              "id": "lock_pitch_yaw",
+              "label": "Lock Pitch / Yaw",
+              "sc": "v_lock_rotation",
+              "toggle": true
+            },
+            {
+              "id": "flight_boost",
+              "label": "Boost",
+              "sc": "v_afterburner"
+            },
+            {
+              "id": "speed_brake",
+              "label": "Speed Brake",
+              "sc": "v_space_brake",
+              "mode": "hold"
+            },
+            {
+              "id": "speed_up",
+              "label": "Speed Limit +",
+              "sc": "v_ifcs_speed_limiter_increment",
+              "mode": "repeat",
+              "meter": "speed",
+              "step": 1,
+              "meterSteps": 20,
+              "meterDefault": 20
+            },
+            {
+              "id": "speed_dn",
+              "label": "Speed Limit −",
+              "sc": "v_ifcs_speed_limiter_decrement",
+              "mode": "repeat",
+              "meter": "speed",
+              "step": -1,
+              "meterSteps": 20,
+              "meterDefault": 20
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Power",
+          "buttons": [
+            {
+              "id": "power_all",
+              "label": "Power",
+              "sc": "v_power_toggle",
+              "toggle": true,
+              "style": "primary",
+              "alsoOn": [
+                "power_shields",
+                "power_weapons"
+              ],
+              "alsoOff": [
+                "power_shields",
+                "power_thrusters",
+                "power_weapons"
+              ]
+            },
+            {
+              "id": "power_shields",
+              "label": "Shields",
+              "sc": "v_power_toggle_shields",
+              "toggle": true,
+              "onlyWhen": {
+                "toggle": "power_all",
+                "label": "Power"
+              }
+            },
+            {
+              "id": "power_thrusters",
+              "label": "Thrusters",
+              "sc": "v_power_toggle_thrusters",
+              "toggle": true,
+              "onlyWhen": {
+                "toggle": "power_all",
+                "label": "Power"
+              }
+            },
+            {
+              "id": "power_weapons",
+              "label": "Weapons",
+              "sc": "v_power_toggle_weapons",
+              "toggle": true,
+              "onlyWhen": {
+                "toggle": "power_all",
+                "label": "Power"
+              }
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Master Modes",
+          "buttons": [
+            {
+              "id": "mm_scm",
+              "radioDefault": true,
+              "label": "SCM Mode",
+              "sc": "v_master_mode_cycle_long",
+              "radio": "mm",
+              "noRepress": true
+            },
+            {
+              "id": "mm_nav",
+              "label": "NAV Mode",
+              "sc": "v_master_mode_cycle_long",
+              "radio": "mm",
+              "noRepress": true
+            },
+            {
+              "id": "qt_engage",
+              "label": "Engage Quantum",
+              "sc": "v_toggle_qdrive_engagement",
+              "mode": "hold",
+              "style": "warn",
+              "onlyWhen": {
+                "radio": "mm",
+                "is": "mm_nav",
+                "label": "NAV"
+              }
+            },
+            {
+              "id": "starmap",
+              "label": "Starmap",
+              "sc": "v_starmap"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Systems",
+          "buttons": [
+            {
+              "id": "mobiglas",
+              "label": "mobiGlas",
+              "sc": "mobiglas"
+            },
+            {
+              "id": "contacts",
+              "label": "Contacts",
+              "sc": "toggle_contact"
+            },
+            {
+              "id": "camera",
+              "label": "Camera",
+              "sc": "v_view_cycle_fwd"
+            },
+            {
+              "id": "exit_seat",
+              "label": "Exit Seat",
+              "sc": "pl_exit"
+            },
+            {
+              "id": "eject",
+              "label": "Eject",
+              "sc": "v_eject",
+              "guard": true,
+              "style": "danger"
+            },
+            {
+              "id": "self_destruct",
+              "label": "Self Destruct",
+              "sc": "v_self_destruct",
+              "guard": true,
+              "style": "danger"
+            }
+          ],
+          "cols": 2
+        }
+      ]
+    },
+    {
+      "name": "Landing",
+      "groups": [
+        {
+          "name": "Landing",
+          "buttons": [
+            {
+              "id": "request_landing",
+              "label": "Hail ATC",
+              "sc": "v_atc_request",
+              "style": "primary"
+            },
+            {
+              "id": "gear",
+              "label": "Landing Gear",
+              "sc": "v_toggle_landing_system",
+              "toggle": true
+            },
+            {
+              "id": "vtol",
+              "label": "VTOL",
+              "sc": "v_vtol_toggle",
+              "toggle": true
+            },
+            {
+              "id": "auto_land",
+              "label": "Auto Land",
+              "sc": "v_autoland",
+              "style": "warn"
+            },
+            {
+              "id": "land_decoupled",
+              "label": "Decoupled",
+              "sc": "v_ifcs_vector_decoupling_toggle",
+              "toggle": true,
+              "state": "decoupled"
+            },
+            {
+              "id": "land_exit",
+              "label": "Exit Seat",
+              "sc": "pl_exit"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Docking & Cargo",
+          "buttons": [
+            {
+              "id": "dock_request",
+              "label": "Request Docking",
+              "sc": "v_toggle_docking_request",
+              "style": "primary"
+            },
+            {
+              "id": "dock_cam",
+              "label": "Docking Camera",
+              "sc": "v_dock_toggle_view",
+              "toggle": true
+            },
+            {
+              "id": "cargo_request",
+              "label": "Request Cargo Loading",
+              "sc": "v_atc_loading_area_request"
+            },
+            {
+              "id": "transform",
+              "label": "Cycle Config",
+              "sc": "v_transform_cycle"
+            }
+          ],
+          "cols": 1
+        },
+        {
+          "name": "Doors",
+          "buttons": [
+            {
+              "id": "land_door_open",
+              "label": "Doors",
+              "sc": "v_toggle_all_doors",
+              "keys": "rctrl+f8",
+              "toggle": true,
+              "state": "doors"
+            },
+            {
+              "id": "land_door_lock",
+              "label": "Lock Doors",
+              "sc": "v_toggle_all_doorlocks",
+              "keys": "rctrl+f7",
+              "toggle": true,
+              "state": "locks"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Lights & Ports",
+          "buttons": [
+            {
+              "id": "lights",
+              "label": "Lights",
+              "sc": "v_lights",
+              "toggle": true
+            },
+            {
+              "id": "light_amp",
+              "label": "Night Vision",
+              "sc": "v_light_amplification_toggle",
+              "toggle": true
+            },
+            {
+              "id": "port_lock",
+              "label": "Port Lock",
+              "sc": "v_toggle_all_portlocks",
+              "toggle": true
+            },
+            {
+              "id": "land_power_all",
+              "label": "Power",
+              "sc": "v_power_toggle",
+              "toggle": true,
+              "state": "power_all",
+              "alsoOn": [
+                "power_shields",
+                "power_weapons"
+              ],
+              "alsoOff": [
+                "power_shields",
+                "power_thrusters",
+                "power_weapons"
+              ]
+            }
+          ],
+          "cols": 2
+        }
+      ]
+    },
+    {
+      "name": "Combat",
+      "compact": true,
+      "groups": [
+        {
+          "name": "Targeting",
+          "buttons": [
+            {
+              "id": "tgt_inview",
+              "label": "In View",
+              "sc": "v_target_cycle_in_view_fwd",
+              "radio": "tgt"
+            },
+            {
+              "id": "tgt_attackers",
+              "label": "Attackers",
+              "sc": "v_target_cycle_attacker_fwd",
+              "radio": "tgt"
+            },
+            {
+              "id": "tgt_hostiles",
+              "label": "Hostiles",
+              "sc": "v_target_cycle_hostile_fwd",
+              "radio": "tgt"
+            },
+            {
+              "id": "tgt_friendly",
+              "label": "Friendly",
+              "sc": "v_target_cycle_friendly_fwd",
+              "radio": "tgt"
+            },
+            {
+              "id": "tgt_prev",
+              "label": "Prev",
+              "sc": "v_target_cycle_all_back",
+              "keys": "rctrl+f11"
+            },
+            {
+              "id": "tgt_closest",
+              "label": "Closest Hostile",
+              "sc": "v_target_cycle_hostile_reset",
+              "style": "primary"
+            },
+            {
+              "id": "tgt_next",
+              "label": "Next",
+              "sc": "v_target_cycle_all_fwd"
+            },
+            {
+              "id": "tgt_sub",
+              "label": "Subtarget",
+              "sc": "v_target_cycle_subitem_fwd"
+            },
+            {
+              "id": "tgt_auto",
+              "label": "Auto Target",
+              "sc": "v_auto_targeting_toggle_long",
+              "toggle": true
+            },
+            {
+              "id": "tgt_precision",
+              "label": "Precision Target",
+              "sc": "v_ads_toggle",
+              "toggle": true
+            },
+            {
+              "id": "tgt_unlock",
+              "label": "Unlock",
+              "sc": "v_target_unlock"
+            },
+            {
+              "id": "tgt_hail",
+              "label": "Hail",
+              "sc": "v_target_hail"
+            }
+          ],
+          "cols": 4
+        },
+        {
+          "name": "Pins",
+          "buttons": [
+            {
+              "id": "pin1_t",
+              "label": "Target 1",
+              "sc": "v_target_toggle_lock_index_1",
+              "style": "danger"
+            },
+            {
+              "id": "pin2_t",
+              "label": "Target 2",
+              "sc": "v_target_toggle_lock_index_2",
+              "style": "danger"
+            },
+            {
+              "id": "pin3_t",
+              "label": "Target 3",
+              "sc": "v_target_toggle_lock_index_3",
+              "style": "danger"
+            },
+            {
+              "id": "pin1_s",
+              "label": "Set 1",
+              "sc": "v_target_toggle_pin_index_1"
+            },
+            {
+              "id": "pin2_s",
+              "label": "Set 2",
+              "sc": "v_target_toggle_pin_index_2"
+            },
+            {
+              "id": "pin3_s",
+              "label": "Set 3",
+              "sc": "v_target_toggle_pin_index_3"
+            }
+          ],
+          "cols": 3
+        },
+        {
+          "name": "Missiles & Guns",
+          "buttons": [
+            {
+              "id": "missile_mode",
+              "label": "Missile Mode",
+              "sc": "v_toggle_missile_mode",
+              "keys": "rctrl+f12",
+              "toggle": true,
+              "style": "primary"
+            },
+            {
+              "id": "missile_launch",
+              "label": "Launch",
+              "sc": "v_weapon_toggle_launch_missile",
+              "guard": true,
+              "style": "danger"
+            },
+            {
+              "id": "missile_type",
+              "label": "Cycle Type",
+              "sc": "v_weapon_cycle_missile_fwd"
+            },
+            {
+              "id": "missile_arm",
+              "label": "Arm +1",
+              "sc": "v_weapon_increase_max_missiles"
+            },
+            {
+              "id": "missile_disarm",
+              "label": "Arm −1",
+              "sc": "v_weapon_decrease_max_missiles",
+              "keys": "rctrl+np0"
+            },
+            {
+              "id": "missile_reset",
+              "label": "Reset Armed",
+              "sc": "v_weapon_reset_max_missiles"
+            },
+            {
+              "id": "gimbal",
+              "label": "Gimbal Lock",
+              "sc": "v_weapon_gimbals_state_toggle",
+              "toggle": true
+            },
+            {
+              "id": "aim_mode",
+              "label": "Aim Mode",
+              "sc": "v_weapon_aim_type_cycle"
+            },
+            {
+              "id": "pip_mode",
+              "label": "Lead / Lag PIP",
+              "sc": "v_weapon_pip_toggle_lead_lag",
+              "keys": "rctrl+np3"
+            }
+          ],
+          "cols": 3
+        },
+        {
+          "name": "Countermeasures",
+          "buttons": [
+            {
+              "id": "decoy",
+              "label": "Decoys",
+              "sc": "v_weapon_countermeasure_decoy_launch",
+              "style": "warn"
+            },
+            {
+              "id": "noise",
+              "label": "Noise",
+              "sc": "v_weapon_countermeasure_noise_launch",
+              "style": "warn"
+            },
+            {
+              "id": "burst_up",
+              "label": "Burst +",
+              "sc": "v_weapon_countermeasure_decoy_burst_increase"
+            },
+            {
+              "id": "burst_dn",
+              "label": "Burst −",
+              "sc": "v_weapon_countermeasure_decoy_burst_decrease"
+            },
+            {
+              "id": "cm_panic",
+              "label": "Panic",
+              "sc": "v_weapon_countermeasure_decoy_launch_panic",
+              "keys": "rctrl+np9",
+              "style": "danger"
+            },
+            {
+              "id": "cbt_boost",
+              "label": "Boost",
+              "sc": "v_afterburner"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Power Management",
+          "buttons": [
+            {
+              "id": "cbt_pw_w_up",
+              "label": "Weapons +",
+              "sc": "v_engineering_assignment_weapons_increase"
+            },
+            {
+              "id": "cbt_pw_e_up",
+              "label": "Engines +",
+              "sc": "v_engineering_assignment_engine_increase"
+            },
+            {
+              "id": "cbt_pw_s_up",
+              "label": "Shields +",
+              "sc": "v_engineering_assignment_shields_increase"
+            },
+            {
+              "id": "cbt_pw_w_dn",
+              "label": "Weapons −",
+              "sc": "v_engineering_assignment_weapons_decrease"
+            },
+            {
+              "id": "cbt_pw_e_dn",
+              "label": "Engines −",
+              "sc": "v_engineering_assignment_engine_decrease"
+            },
+            {
+              "id": "cbt_pw_s_dn",
+              "label": "Shields −",
+              "sc": "v_engineering_assignment_shields_decrease"
+            },
+            {
+              "id": "cbt_pw_reset",
+              "label": "Reset",
+              "sc": "v_engineering_assignment_reset",
+              "style": "primary"
+            }
+          ],
+          "cols": 3
+        },
+        {
+          "name": "Shield Faces",
+          "buttons": [
+            {
+              "id": "cbt_sh_top",
+              "label": "Top",
+              "sc": "v_shield_raise_level_up",
+              "keys": "rctrl+np7"
+            },
+            {
+              "id": "cbt_sh_front",
+              "label": "Front",
+              "sc": "v_shield_raise_level_forward",
+              "keys": "rctrl+np8"
+            },
+            {
+              "id": "cbt_sh_left",
+              "label": "Left",
+              "sc": "v_shield_raise_level_left",
+              "keys": "rctrl+np4"
+            },
+            {
+              "id": "cbt_sh_reset",
+              "label": "Reset",
+              "sc": "v_shield_reset_level",
+              "keys": "rctrl+np5"
+            },
+            {
+              "id": "cbt_sh_right",
+              "label": "Right",
+              "sc": "v_shield_raise_level_right",
+              "keys": "rctrl+np6"
+            },
+            {
+              "id": "cbt_sh_bottom",
+              "label": "Bottom",
+              "sc": "v_shield_raise_level_down",
+              "keys": "rctrl+np1"
+            },
+            {
+              "id": "cbt_sh_back",
+              "label": "Back",
+              "sc": "v_shield_raise_level_back",
+              "keys": "rctrl+np2"
+            }
+          ],
+          "cols": 3,
+          "layout": "shields"
+        }
+      ]
+    },
+    {
+      "name": "Mining",
+      "compact": true,
+      "groups": [
+        {
+          "name": "Mining Laser",
+          "buttons": [
+            {
+              "id": "mining",
+              "label": "Mining Mode",
+              "sc": "v_toggle_mining_mode",
+              "toggle": true,
+              "state": "mining",
+              "style": "primary"
+            },
+            {
+              "id": "mine_fire",
+              "label": "Fire Laser",
+              "sc": "v_toggle_mining_laser_fire",
+              "toggle": true,
+              "style": "danger"
+            },
+            {
+              "id": "mine_switch",
+              "label": "Fracture / Extract",
+              "sc": "v_toggle_mining_laser_type",
+              "toggle": true
+            },
+            {
+              "id": "mine_gimbal",
+              "label": "Gimbal Lock",
+              "sc": "v_weapon_gimbals_state_toggle",
+              "toggle": true,
+              "state": "gimbal"
+            },
+            {
+              "id": "mine_pwr_up",
+              "label": "Laser Power +",
+              "keys": "wheel_up",
+              "mode": "repeat",
+              "style": "warn"
+            },
+            {
+              "id": "mine_pwr_dn",
+              "label": "Laser Power −",
+              "keys": "wheel_down",
+              "mode": "repeat",
+              "style": "warn"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Modules",
+          "buttons": [
+            {
+              "id": "mine_mod1",
+              "label": "1",
+              "sc": "v_mining_use_consumable1"
+            },
+            {
+              "id": "mine_mod2",
+              "label": "2",
+              "sc": "v_mining_use_consumable2"
+            },
+            {
+              "id": "mine_mod3",
+              "label": "3",
+              "sc": "v_mining_use_consumable3"
+            },
+            {
+              "id": "mine_beam",
+              "label": "Beam High / Low",
+              "sc": "v_mining_use_permanent_modifier",
+              "toggle": true
+            },
+            {
+              "id": "mine_jettison",
+              "label": "Jettison Cargo",
+              "sc": "v_jettison_volatile_cargo",
+              "guard": true,
+              "style": "danger"
+            }
+          ],
+          "cols": 3
+        },
+        {
+          "name": "Scanning",
+          "buttons": [
+            {
+              "id": "mine_scan_mode",
+              "label": "Scan Mode",
+              "sc": "v_toggle_scan_mode",
+              "toggle": true,
+              "state": "scan_mode"
+            },
+            {
+              "id": "mine_scan_ping",
+              "label": "Ping",
+              "sc": "v_invoke_ping"
+            },
+            {
+              "id": "mine_scan_up",
+              "label": "Scan Angle +",
+              "sc": "v_inc_scan_focus_level",
+              "mode": "repeat"
+            },
+            {
+              "id": "mine_scan_dn",
+              "label": "Scan Angle −",
+              "sc": "v_dec_scan_focus_level",
+              "mode": "repeat"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Ship",
+          "buttons": [
+            {
+              "id": "mine_decoupled",
+              "label": "Decoupled",
+              "sc": "v_ifcs_vector_decoupling_toggle",
+              "toggle": true,
+              "state": "decoupled"
+            },
+            {
+              "id": "mine_vtol",
+              "label": "VTOL",
+              "sc": "v_vtol_toggle",
+              "toggle": true,
+              "state": "vtol"
+            },
+            {
+              "id": "mine_lights",
+              "label": "Lights",
+              "sc": "v_lights",
+              "toggle": true,
+              "state": "lights"
+            },
+            {
+              "id": "mine_exit",
+              "label": "Exit Seat",
+              "sc": "pl_exit"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Power Management",
+          "buttons": [
+            {
+              "id": "mine_pw_w_up",
+              "label": "Weapons +",
+              "sc": "v_engineering_assignment_weapons_increase"
+            },
+            {
+              "id": "mine_pw_e_up",
+              "label": "Engines +",
+              "sc": "v_engineering_assignment_engine_increase"
+            },
+            {
+              "id": "mine_pw_s_up",
+              "label": "Shields +",
+              "sc": "v_engineering_assignment_shields_increase"
+            },
+            {
+              "id": "mine_pw_w_dn",
+              "label": "Weapons −",
+              "sc": "v_engineering_assignment_weapons_decrease"
+            },
+            {
+              "id": "mine_pw_e_dn",
+              "label": "Engines −",
+              "sc": "v_engineering_assignment_engine_decrease"
+            },
+            {
+              "id": "mine_pw_s_dn",
+              "label": "Shields −",
+              "sc": "v_engineering_assignment_shields_decrease"
+            },
+            {
+              "id": "mine_pw_reset",
+              "label": "Reset",
+              "sc": "v_engineering_assignment_reset",
+              "style": "primary"
+            }
+          ],
+          "cols": 3
+        },
+        {
+          "name": "Shield Faces",
+          "buttons": [
+            {
+              "id": "mine_sh_top",
+              "label": "Top",
+              "sc": "v_shield_raise_level_up",
+              "keys": "rctrl+np7"
+            },
+            {
+              "id": "mine_sh_front",
+              "label": "Front",
+              "sc": "v_shield_raise_level_forward",
+              "keys": "rctrl+np8"
+            },
+            {
+              "id": "mine_sh_left",
+              "label": "Left",
+              "sc": "v_shield_raise_level_left",
+              "keys": "rctrl+np4"
+            },
+            {
+              "id": "mine_sh_reset",
+              "label": "Reset",
+              "sc": "v_shield_reset_level",
+              "keys": "rctrl+np5"
+            },
+            {
+              "id": "mine_sh_right",
+              "label": "Right",
+              "sc": "v_shield_raise_level_right",
+              "keys": "rctrl+np6"
+            },
+            {
+              "id": "mine_sh_bottom",
+              "label": "Bottom",
+              "sc": "v_shield_raise_level_down",
+              "keys": "rctrl+np1"
+            },
+            {
+              "id": "mine_sh_back",
+              "label": "Back",
+              "sc": "v_shield_raise_level_back",
+              "keys": "rctrl+np2"
+            }
+          ],
+          "cols": 3,
+          "layout": "shields"
+        }
+      ]
+    },
+    {
+      "name": "Salvage",
+      "compact": true,
+      "groups": [
+        {
+          "name": "Salvage Beams",
+          "buttons": [
+            {
+              "id": "salvage",
+              "label": "Salvage Mode",
+              "sc": "v_toggle_salvage_mode",
+              "toggle": true,
+              "state": "mining",
+              "style": "primary"
+            },
+            {
+              "id": "salv_fire",
+              "label": "Fire Focused",
+              "sc": "v_salvage_toggle_fire_focused",
+              "toggle": true,
+              "style": "danger"
+            },
+            {
+              "id": "salv_fire_l",
+              "label": "Fire Left",
+              "sc": "v_salvage_toggle_fire_left",
+              "toggle": true
+            },
+            {
+              "id": "salv_fire_r",
+              "label": "Fire Right",
+              "sc": "v_salvage_toggle_fire_right",
+              "toggle": true
+            },
+            {
+              "id": "salv_fracture",
+              "label": "Fire Fracture",
+              "sc": "v_salvage_toggle_fire_fracture",
+              "toggle": true
+            },
+            {
+              "id": "salv_disintegrate",
+              "label": "Fire Disinte­grate",
+              "sc": "v_salvage_toggle_fire_disintegrate",
+              "toggle": true
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Heads & Beam",
+          "buttons": [
+            {
+              "id": "salv_focus_all",
+              "label": "Focus All",
+              "sc": "v_salvage_focus_all_heads",
+              "radio": "focus"
+            },
+            {
+              "id": "salv_focus_l",
+              "label": "Focus Left",
+              "sc": "v_salvage_focus_left",
+              "radio": "focus"
+            },
+            {
+              "id": "salv_focus_r",
+              "label": "Focus Right",
+              "sc": "v_salvage_focus_right",
+              "radio": "focus"
+            },
+            {
+              "id": "salv_focus_frac",
+              "label": "Focus Fracture",
+              "sc": "v_salvage_focus_fracture",
+              "radio": "focus"
+            },
+            {
+              "id": "salv_modifier",
+              "label": "Cycle Modifier",
+              "sc": "v_salvage_cycle_modifiers_focused"
+            },
+            {
+              "id": "salv_axis",
+              "label": "Beam Axis",
+              "sc": "v_salvage_toggle_beam_spacing_axis"
+            },
+            {
+              "id": "salv_spacing_up",
+              "label": "Spacing +",
+              "keys": "wheel_up",
+              "mode": "repeat"
+            },
+            {
+              "id": "salv_spacing_dn",
+              "label": "Spacing −",
+              "keys": "wheel_down",
+              "mode": "repeat"
+            },
+            {
+              "id": "salv_gimbal",
+              "label": "Gimbal",
+              "sc": "v_salvage_toggle_gimbal_mode",
+              "toggle": true
+            },
+            {
+              "id": "salv_gimbal_reset",
+              "label": "Gimbal Reset",
+              "sc": "v_salvage_reset_gimbal"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Scanning",
+          "buttons": [
+            {
+              "id": "salv_scan_mode",
+              "label": "Scan Mode",
+              "sc": "v_toggle_scan_mode",
+              "toggle": true,
+              "state": "scan_mode"
+            },
+            {
+              "id": "salv_scan_ping",
+              "label": "Ping",
+              "sc": "v_invoke_ping"
+            },
+            {
+              "id": "salv_scan_up",
+              "label": "Scan Angle +",
+              "sc": "v_inc_scan_focus_level",
+              "mode": "repeat"
+            },
+            {
+              "id": "salv_scan_dn",
+              "label": "Scan Angle −",
+              "sc": "v_dec_scan_focus_level",
+              "mode": "repeat"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Ship",
+          "buttons": [
+            {
+              "id": "salv_decoupled",
+              "label": "Decoupled",
+              "sc": "v_ifcs_vector_decoupling_toggle",
+              "toggle": true,
+              "state": "decoupled"
+            },
+            {
+              "id": "salv_vtol",
+              "label": "VTOL",
+              "sc": "v_vtol_toggle",
+              "toggle": true,
+              "state": "vtol"
+            },
+            {
+              "id": "salv_lights",
+              "label": "Lights",
+              "sc": "v_lights",
+              "toggle": true,
+              "state": "lights"
+            },
+            {
+              "id": "salv_jettison",
+              "label": "Jettison Cargo",
+              "sc": "v_jettison_volatile_cargo",
+              "guard": true,
+              "style": "danger"
+            },
+            {
+              "id": "salv_exit",
+              "label": "Exit Seat",
+              "sc": "pl_exit"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Doors",
+          "buttons": [
+            {
+              "id": "salv_door_open",
+              "label": "Doors",
+              "sc": "v_toggle_all_doors",
+              "keys": "rctrl+f8",
+              "toggle": true,
+              "state": "doors"
+            },
+            {
+              "id": "salv_door_lock",
+              "label": "Lock Doors",
+              "sc": "v_toggle_all_doorlocks",
+              "keys": "rctrl+f7",
+              "toggle": true,
+              "state": "locks"
+            }
+          ],
+          "cols": 2
+        }
+      ]
+    },
+    {
+      "name": "Social",
+      "compact": true,
+      "rowMax": 72,
+      "groups": [
+        {
+          "name": "Weapon Drawn",
+          "buttons": [
+            {
+              "id": "em_forward",
+              "label": "Forward",
+              "sc": "emote_cs_forward",
+              "text": "/forward",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "em_left",
+              "label": "Left",
+              "sc": "emote_cs_left",
+              "text": "/left",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "em_right",
+              "label": "Right",
+              "sc": "emote_cs_right",
+              "text": "/right",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "em_stop",
+              "label": "Stop",
+              "sc": "emote_cs_stop",
+              "text": "/stop",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "em_yes",
+              "label": "Yes",
+              "sc": "emote_cs_yes",
+              "text": "/yes",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "em_no",
+              "label": "No",
+              "sc": "emote_cs_no",
+              "text": "/no",
+              "style": "danger",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            }
+          ],
+          "cols": 1
+        }
+      ],
+      "emoteLibrary": true
+    },
+    {
+      "name": "On Foot",
+      "compact": true,
+      "groups": [
+        {
+          "name": "Gear",
+          "buttons": [
+            {
+              "id": "inventory",
+              "label": "Inventory",
+              "sc": "pc_pit_inventory"
+            },
+            {
+              "id": "medpen",
+              "label": "Medpen",
+              "sc": "pc_qs_consumables",
+              "style": "primary"
+            },
+            {
+              "id": "inspect",
+              "label": "Inspect",
+              "sc": "inspect",
+              "keys": "rctrl+insert"
+            },
+            {
+              "id": "drop",
+              "label": "Drop",
+              "sc": "pc_pit_item_drop",
+              "keys": "rctrl+home"
+            },
+            {
+              "id": "customize",
+              "label": "Customize",
+              "sc": "customize"
+            },
+            {
+              "id": "foot_exit",
+              "label": "Exit Seat",
+              "sc": "pl_exit"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Weapons",
+          "buttons": [
+            {
+              "id": "wpn_primary",
+              "label": "Primary",
+              "sc": "select_primary_pit",
+              "radio": "wpn",
+              "style": "danger"
+            },
+            {
+              "id": "wpn_secondary",
+              "label": "Secondary",
+              "sc": "select_secondary_pit",
+              "radio": "wpn",
+              "style": "danger"
+            },
+            {
+              "id": "wpn_sidearm",
+              "label": "Sidearm",
+              "sc": "select_sidearm_pit",
+              "radio": "wpn",
+              "style": "danger"
+            },
+            {
+              "id": "wpn_melee",
+              "label": "Melee",
+              "sc": "select_meleeweapon_pit",
+              "radio": "wpn",
+              "style": "danger"
+            },
+            {
+              "id": "wpn_gadget",
+              "label": "Gadget",
+              "sc": "select_gadget_pit",
+              "radio": "wpn"
+            },
+            {
+              "id": "wpn_unarmed",
+              "label": "Unarmed",
+              "sc": "selectUnarmedCombat",
+              "radio": "wpn"
+            },
+            {
+              "id": "wpn_grenade",
+              "label": "Grenade",
+              "sc": "pc_qs_grenades",
+              "radio": "wpn"
+            },
+            {
+              "id": "wpn_reload",
+              "label": "Reload",
+              "sc": "reload"
+            },
+            {
+              "id": "wpn_holster",
+              "label": "Holster",
+              "sc": "holster",
+              "radio": "wpn",
+              "radioClear": true,
+              "style": "primary",
+              "holdMs": 900
+            },
+            {
+              "id": "wpn_stance",
+              "label": "Weapon Stance",
+              "sc": "toggle_lowered"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Weapon Systems",
+          "buttons": [
+            {
+              "id": "fire_mode",
+              "label": "Fire Mode",
+              "sc": "weapon_change_firemode"
+            },
+            {
+              "id": "underbarrel",
+              "label": "Under­barrel",
+              "sc": "weapon_auxiliary_action"
+            },
+            {
+              "id": "zero_up",
+              "label": "Zero +",
+              "sc": "weapon_zeroing_increase"
+            },
+            {
+              "id": "zero_dn",
+              "label": "Zero −",
+              "sc": "weapon_zeroing_decrease"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Zero-G & Tractor",
+          "buttons": [
+            {
+              "id": "eva_detach",
+              "label": "Detach",
+              "sc": "tractor_beam_detach",
+              "style": "warn"
+            },
+            {
+              "id": "eva_brake",
+              "label": "Brake",
+              "sc": "eva_brake"
+            },
+            {
+              "id": "eva_boost",
+              "label": "Boost",
+              "sc": "eva_boost"
+            },
+            {
+              "id": "tractor_up",
+              "label": "Tractor Dist +",
+              "sc": "tractor_beam_increase_distance",
+              "mode": "repeat"
+            },
+            {
+              "id": "tractor_dn",
+              "label": "Tractor Dist −",
+              "sc": "tractor_beam_decrease_distance",
+              "mode": "repeat"
+            }
+          ],
+          "cols": 2
+        },
+        {
+          "name": "Movement & Kit",
+          "buttons": [
+            {
+              "id": "stand",
+              "label": "Stand",
+              "virtual": true,
+              "radio": "stance",
+              "radioDefault": true,
+              "via": [
+                "crouch",
+                "prone"
+              ]
+            },
+            {
+              "id": "crouch",
+              "label": "Crouch",
+              "sc": "crouch",
+              "radio": "stance",
+              "radioRelease": true
+            },
+            {
+              "id": "prone",
+              "label": "Prone",
+              "sc": "prone",
+              "radio": "stance",
+              "radioRelease": true
+            },
+            {
+              "id": "flashlight",
+              "label": "Flashlight",
+              "sc": "toggle_flashlight",
+              "toggle": true
+            },
+            {
+              "id": "helmet",
+              "label": "Helmet",
+              "sc": "toggleAttachHelmet",
+              "toggle": true,
+              "toggleDefault": true
+            },
+            {
+              "id": "wipe_visor",
+              "label": "Wipe Visor",
+              "sc": "visor_wipe"
+            },
+            {
+              "id": "foot_yes",
+              "label": "Yes",
+              "sc": "emote_cs_yes",
+              "text": "/yes",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            },
+            {
+              "id": "foot_no",
+              "label": "No",
+              "sc": "emote_cs_no",
+              "text": "/no",
+              "onlyWhen": {
+                "radio": "wpn",
+                "not": [
+                  "",
+                  "wpn_unarmed"
+                ],
+                "label": "a weapon or gadget"
+              }
+            }
+          ],
+          "cols": 2
+        }
+      ]
+    },
+    {
+      "name": "Keybinds",
+      "type": "keybinds"
+    }
+  ]
+}

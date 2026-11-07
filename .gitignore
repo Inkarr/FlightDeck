@@ -1,0 +1,25 @@
+# Your own settings and data - Flightdeck keeps them all in mydata/
+# (includes my_uex.json with your UEX secret key - never commit it)
+mydata/
+
+# Older layouts kept these next to the code; Flightdeck moves them into mydata/ on start
+my_*.json
+my_*.json.bak
+*.before-upgrade
+.firewall-asked
+market_cache/
+sc_data/sc_defaults.json
+sc_data/sc_actions.json
+sc_data/defaultProfile.plain.xml
+
+# Builds
+.buildenv/
+build/
+dist/
+Flightdeck-Setup*.zip
+__pycache__/
+*.pyc
+
+# Backups
+backup-*/
+static/index.backup-*.html
