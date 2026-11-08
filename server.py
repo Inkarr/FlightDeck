@@ -414,7 +414,7 @@ def load_config():
                     except Exception as e:
                         print(f"  ! skipped your changes to '{b['id']}' ({e})")
     have = {p.get("type") or p.get("name") for p in cfg["pages"]}
-    for kind, name in (("trade", "Trade"), ("items", "Items")):   # the market tabs (market.py)
+    for kind, name in (("trade", "Trade"), ("hangar", "Hangar"), ("items", "Items")):   # the market tabs (market.py)
         if kind not in have:
             cfg["pages"].append({"name": name, "type": kind})
     mine = library_buttons()
@@ -1046,6 +1046,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(200, MARKET.log_lines(CONFIG.get("scPath", ""), arg("q", "."), min(500, int(arg("n", "150")))))
             if path == "/api/market/ship":
                 return self._json(200, MARKET.ship_grids(int(arg("id", "0"))))
+            if path == "/api/market/shipinfo":
+                return self._json(200, MARKET.ship_info(int(arg("id", "0"))))
             if path == "/api/market/status":
                 return self._json(200, MARKET.status())
         except Exception as ex:

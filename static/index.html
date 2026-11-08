@@ -832,6 +832,12 @@ nav button.fav-tab.active .ic{filter:drop-shadow(0 0 6px rgba(255,180,61,.7))}
 #mkUex .fv-dlg-btns{display:flex;gap:10px}#mkUex .fv-dlg-btns button{flex:1;font-size:15px}
 #mkGrid .dialog{width:min(1100px,96vw);height:min(780px,94vh);display:flex;flex-direction:column;gap:12px;text-align:left;padding:18px}
 #mkGrid .pk-head .done{width:auto;padding:10px 22px}
+#mkShip .dialog{width:min(1100px,96vw);height:min(800px,94vh);display:flex;flex-direction:column;gap:12px;text-align:left;padding:18px}
+#mkShip .pk-head .done{width:auto;padding:10px 22px}
+#mkShip input.mk-input{margin:0;font-family:var(--font);font-size:17px;letter-spacing:0;text-align:left;padding:0 10px;height:42px}
+#mkShip .mk-table td small{display:block}
+.mk-loadt{table-layout:fixed}
+#mkShip a{color:var(--cyan)}
 #mkGrid .mk-seg button{width:auto;height:40px;padding:0 12px;font-size:14px;margin:0;letter-spacing:.06em;background:#0b1622;color:var(--dim);border:1px solid #22384e}
 #mkGrid .mk-seg button.on{border-color:var(--cyan);color:var(--cyan);background:#0d2236}
 #mkGrid input.mk-input{margin:0;font-family:var(--font);font-size:17px;letter-spacing:0;text-align:left;padding:0 10px;height:42px}
@@ -969,6 +975,23 @@ tr.concept td:first-child small{color:var(--amber)}
 .mk-stats dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding-top:3px}
 .mk-stats dd{margin:0;overflow-wrap:anywhere}
 .mk-sub{margin:4px 0 0;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+.mk-load{display:flex;flex-wrap:wrap;gap:6px}
+.mk-load .mk-chip{height:34px;padding:0 10px;font-size:12px;display:inline-flex;align-items:center;gap:6px;color:var(--fg,#d8e6f2)}
+.mk-load .mk-chip i{font-style:normal;color:var(--cyan);font-size:10px;letter-spacing:.12em}
+.mk-load .mk-chip.none{opacity:.45;cursor:default}
+.mk-shiphead{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.mk-shiphead img{width:300px;max-width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;border:1px solid var(--well-edge);background:#060c13}
+.mk-shiphead .t{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+.mk-statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.mk-statgrid div{padding:8px 10px;border-radius:8px;background:#060c13;border:1px solid var(--well-edge)}
+.mk-statgrid small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.mk-statgrid b{font-size:16px}
+.mk-shipsec{scroll-margin-top:8px}
+.mk-shipsec.hit{outline:2px solid var(--cyan);outline-offset:2px;border-radius:10px}
+.mk-mine{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.mk-mine label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.mk-trip{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.mk-trip>.cap{color:var(--cyan)}
 .mk-desc{margin:0;color:var(--dim2);font-size:15px;line-height:1.4;-webkit-user-select:text;user-select:text}
 .mk-stop{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--edge);background:#08121c;flex:none}
 .mk-stop h4{margin:0;display:flex;align-items:baseline;gap:10px;font-size:19px}
@@ -1191,6 +1214,12 @@ tr.concept td:first-child small{color:var(--amber)}
     <div class="mk-detail" id="mkGridBody"></div>
   </div>
 </div>
+<div class="overlay" id="mkShip">
+  <div class="dialog" role="dialog" aria-labelledby="mkShipTitle">
+    <div class="pk-head"><h2 id="mkShipTitle">Ship</h2><span style="flex:1"></span><button class="done" id="mkShipClose">Done</button></div>
+    <div class="mk-detail" id="mkShipBody"></div>
+  </div>
+</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -1299,7 +1328,8 @@ tr.concept td:first-child small{color:var(--amber)}
     "Keybinds": '<path d="M2 6h20v12H2zM6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>',
     "Favourites": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     "Trade": '<path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',
-    "Items": '<path d="M4 7h16v13H4zM9 7V4h6v3M4 12h16"/>'
+    "Items": '<path d="M4 7h16v13H4zM9 7V4h6v3M4 12h16"/>',
+    "Hangar": '<path d="M3 20V10a9 7 0 0 1 18 0v10M3 20h18"/><path d="M8 17l4-5 4 5-4-1.5z"/>'
   };
   // your own buttons, icons and panels (my_buttons.json on the PC)
   let LIB = {buttons: [], panels: [], icons: {}}, libLoaded = false;
@@ -2061,6 +2091,7 @@ tr.concept td:first-child small{color:var(--amber)}
 
   // ======================= TRADE =======================
   let TD = null, TM = {}, CM = {}, tdLoading = null, tradeView = store.get("tradeView", "routes"), ROUTES = [];
+  if (tradeView === "hangar") tradeView = "routes";   // Hangar has its own tab now
   const ARROW = '<svg width="22" height="22" viewBox="0 0 24 24" class="ic" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const placeKey = t => t ? t.sys + "|" + t.place : "";
   const termLabel = t => !t ? "" : (t.place && !t.name.toLowerCase().includes(t.place.toLowerCase()) ? `${t.name} · ${t.place}` : t.name);
@@ -2102,7 +2133,7 @@ tr.concept td:first-child small{color:var(--amber)}
     pg.classList.add("info");
     pg.innerHTML = `<div class="mk-bar" style="margin-bottom:12px">
         <div class="mk-seg mk-views" role="tablist" aria-label="Trade">
-          <button data-v="routes">Routes</button><button data-v="run">Current run</button><button data-v="ledger">Ledger</button><button data-v="hangar">Hangar</button></div>
+          <button data-v="routes">Routes</button><button data-v="run">Current run</button><button data-v="ledger">Ledger</button></div>
         <span class="sp"></span><span class="cap" id="mkTdAge"></span>
         <button class="hbtn" id="mkUexBtn" title="Send your trades to your UEX Trade Log" style="width:auto;padding:0 14px"><span class="mk-uexdot" id="mkUexDot"></span>UEX</button>
         <button class="hbtn" id="mkTdRefresh" title="Get the latest prices"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/></svg><span class="t">Prices</span></button>
@@ -2132,7 +2163,7 @@ tr.concept td:first-child small{color:var(--amber)}
     if (dot){ dot.classList.toggle("on", !!UEXS.ready); dot.parentElement.title = UEXS.ready ? `Linked to UEX${UEXS.user ? " as " + UEXS.user : ""}${UEXS.autoSend ? " · sending automatically" : ""}` : "Send your trades to your UEX Trade Log"; }
     const a = document.getElementById("mkTdAge");
     if (a) a.textContent = "UEX prices · fetched " + (TD.age == null ? "now" : ago(Date.now() / 1000 - TD.age)) + " ago";
-    if (tradeView === "run") paintRun(body); else if (tradeView === "ledger") paintLedger(body); else if (tradeView === "hangar") paintHangar(body); else paintRoutes(body);
+    if (tradeView === "run") paintRun(body); else if (tradeView === "ledger") paintLedger(body); else paintRoutes(body);
   }
 
   // ----- Routes -----
@@ -2159,16 +2190,18 @@ tr.concept td:first-child small{color:var(--amber)}
         <label>Ship<select id="mkShip"><option value="">Choose a ship, or type the SCU below</option>${shipOpts}</select></label>
         ${s.ship ? `<button class="mk-btn" id="mkShipGrid" style="height:38px;font-size:13px;margin-top:-4px">Cargo grid &amp; boxes</button>` : ""}
         ${mine.length ? `<label class="mk-check" style="min-height:30px;margin-top:-4px"><input type="checkbox" id="mkAllShips"${s.allShips ? " checked" : ""}>Show ships you don't have</label>`
-          : `<p class="mk-note" style="margin-top:-4px">${hasHangar ? "None of your ships carry cargo." : "Add your ships under <b>Hangar</b> to shorten this list."}</p>`}
+          : `<p class="mk-note" style="margin-top:-4px">${hasHangar ? "None of your ships carry cargo." : "Add your ships on the <b>Hangar</b> tab to shorten this list."}</p>`}
         <div class="mk-two">
           <label>Cargo (SCU)<input class="mk-input" id="mkScu" type="number" inputmode="numeric" min="1" value="${s.scu || ""}" placeholder="e.g. 96"></label>
           <label>Budget (aUEC)<input class="mk-input" id="mkBudget" type="number" inputmode="numeric" min="0" value="${s.budget || ""}" placeholder="no limit"></label></div>
         ${aboardNow() ? `<label class="mk-check" style="min-height:30px;margin-top:-4px"><input type="checkbox" id="mkAboard"${s.countAboard === false ? "" : " checked"}>Allow for cargo aboard (${fmt(aboardNow())} SCU) · ${fmt(Math.max(0, (+s.scu || 0) - aboardNow()))} SCU free</label>` : ""}
+        <label>Trip<div class="mk-seg" id="mkTrip"><button type="button" data-t="one" class="${s.round ? "" : "on"}">One way</button><button type="button" data-t="round" class="${s.round ? "on" : ""}">Round trip</button></div></label>
         <label>Starting from<div class="mk-pick"><button type="button" id="mkFrom" class="${s.from ? "" : "any"}"><span>${esc(pickLabel(s.from) || "Anywhere")}</span></button>${s.from ? '<button class="mk-x" data-clr="from" aria-label="Clear">×</button>' : ""}</div></label>
-        <label>Finishing at<div class="mk-pick"><button type="button" id="mkTo" class="${s.to ? "" : "any"}"><span>${esc(pickLabel(s.to) || "Anywhere")}</span></button>${s.to ? '<button class="mk-x" data-clr="to" aria-label="Clear">×</button>' : ""}</div></label>
+        <label>${s.round ? "Turn around at" : "Finishing at"}<div class="mk-pick"><button type="button" id="mkTo" class="${s.to ? "" : "any"}"><span>${esc(pickLabel(s.to) || "Anywhere")}</span></button>${s.to ? '<button class="mk-x" data-clr="to" aria-label="Clear">×</button>' : ""}</div></label>
         <label>Avoid<div class="mk-pick"><button type="button" id="mkAvoid" class="${avoidText === "Nowhere" ? "any" : "avoid"}"><span>${esc(avoidText)}</span></button>${avoidText !== "Nowhere" ? '<button class="mk-x" data-clr="avoid" aria-label="Clear">×</button>' : ""}</div></label>
         <label>Ignore prices older than<div class="mk-seg" id="mkAge">${[[1, "1 day"], [3, "3 days"], [7, "1 week"], [0, "Any"]].map(([v, l]) => `<button type="button" data-a="${v}" class="${(s.maxAge ?? 7) === v ? "on" : ""}">${l}</button>`).join("")}</div></label>
         <label class="mk-check"><input type="checkbox" id="mkIllegal"${s.illegal ? " checked" : ""}>Include illegal cargo</label>
+        ${s.round ? `<p class="mk-note"><b>Round trip:</b> take one cargo out, then bring another back to where you started. The return cargo is bought where you sold the first, and its budget includes what the first leg made.</p>` : ""}
         <p class="mk-note">Profit assumes you fill up to your cargo, budget and the stock on sale. <b>Demand at the sell end isn't always known</b> - check the terminal before you buy a full load.</p>
       </div>`)}
       ${panel("02", "Best Routes", `<div class="mk-scroll" id="mkRoutes"></div>`, {grow: true, head: `<span class="cap" id="mkRouteCount"></span>`})}
@@ -2192,6 +2225,7 @@ tr.concept td:first-child small{color:var(--amber)}
       if (b.dataset.clr === "avoid"){ s.excl = []; s.exclSys = []; } else s[b.dataset.clr] = "";
       buzz(6); saveLedger(); paintRoutes(body); }));
     body.querySelector("#mkIllegal").addEventListener("change", e => { s.illegal = e.target.checked; re(); });
+    body.querySelectorAll("#mkTrip button").forEach(b => b.addEventListener("click", () => { s.round = b.dataset.t === "round"; buzz(8); saveLedger(); paintRoutes(body); }));
     calcRoutes();
   }
   function calcRoutes(){
@@ -2212,18 +2246,24 @@ tr.concept td:first-child small{color:var(--amber)}
       if (r[3] > 0) g.s.push(r);
     });
     let out = [];
+    const legs = [];   // every profitable leg, for round trips
     Object.entries(byCom).forEach(([cid, g]) => {
       const list = [];
       g.b.forEach(b => {
         const tb = TM[b[1]];
-        if (s.from && placeKey(tb) !== s.from) return;
+        if (s.from && !s.round && placeKey(tb) !== s.from) return;
         if (avoid.has(placeKey(tb)) || avoidSys.has(tb.sys)) return;
         g.s.forEach(x => {
           if (x[1] === b[1]) return;
           const tx = TM[x[1]]; if (tb.sys !== tx.sys) return;        // no jump-point runs
-          if (s.to && placeKey(tx) !== s.to) return;
           if (avoid.has(placeKey(tx))) return;
           const margin = x[3] - b[2]; if (margin <= 0) return;
+          if (s.round){   // leg sizes before the budget: the return leg's budget depends on the first leg
+            let u = scu; if (b[4] > 0) u = Math.min(u, b[4]); if (x[5] > 0) u = Math.min(u, x[5]); u = Math.floor(u);
+            if (u > 0) legs.push({c: CM[cid], b, x, tb, tx, cap: u, margin, a: placeKey(tb), z: placeKey(tx)});
+            return;
+          }
+          if (s.to && placeKey(tx) !== s.to) return;
           let units = scu;
           if (budget) units = Math.min(units, Math.floor(budget / b[2]));
           if (b[4] > 0) units = Math.min(units, b[4]);
@@ -2235,10 +2275,12 @@ tr.concept td:first-child small{color:var(--amber)}
       list.sort((p, q) => q.profit - p.profit);
       out = out.concat(list.slice(0, 3));     // a few per commodity, so one cargo doesn't fill the list
     });
+    if (s.round) out = roundTrips(legs, s, budget);
     out.sort((p, q) => q.profit - p.profit);
     ROUTES = out.slice(0, 60);
     document.getElementById("mkRouteCount").textContent = ROUTES.length ? `TOP ${ROUTES.length}` : "";
     if (!ROUTES.length){ box.innerHTML = `<div class="mk-empty">No profitable routes with these settings.<br>Try another system, a bigger budget, older prices${s.from || s.to || avoid.size || avoidSys.size ? ", or fewer places set under Starting from, Finishing at and Avoid" : ""}.</div>`; return; }
+    if (s.round){ paintRoundTrips(box, s); return; }
     box.innerHTML = ROUTES.map((r, i) => `<div class="mk-route">
       <div class="mk-rhead"><span class="n">${String(i + 1).padStart(2, "0")}</span><b>${esc(r.c.name)}</b>
         ${r.c.illegal ? '<span class="tag v">ILLEGAL</span>' : ""}${r.c.volatile ? '<span class="tag v">VOLATILE</span>' : ""}
@@ -2264,6 +2306,69 @@ tr.concept td:first-child small{color:var(--amber)}
     box.querySelectorAll("[data-r]").forEach(b => b.addEventListener("click", () => {
       const r = ROUTES[+b.dataset.r]; buzz(10);
       openLog("buy", {cid: r.c.id, tid: r.tb.id, scu: r.units, price: r.b[2], target: {tid: r.tx.id, name: r.tx.name, price: r.x[3]}});
+    }));
+  }
+
+  // ----- Round trips: a cargo out, then a different cargo back to where you started -----
+  const fill = (leg, money) => { let u = leg.cap; if (money > 0) u = Math.min(u, Math.floor(money / leg.b[2])); return Math.max(0, u); };
+  function roundTrips(legs, s, budget){
+    const back = {};   // "from place|to place" -> legs, best first
+    legs.forEach(l => (back[l.a + ">" + l.z] = back[l.a + ">" + l.z] || []).push(l));
+    Object.values(back).forEach(v => v.sort((p, q) => q.cap * q.margin - p.cap * p.margin));
+    const out = [];
+    legs.forEach(o => {
+      if (s.from && o.a !== s.from) return;
+      if (s.to && o.z !== s.to) return;
+      const u1 = fill(o, budget); if (!u1) return;
+      const p1 = u1 * o.margin;
+      const opts = (back[o.z + ">" + o.a] || []).slice(0, 6);
+      let best = null;
+      opts.forEach(r => { const u2 = fill(r, budget ? budget + p1 : 0); if (!u2) return;
+        const p2 = u2 * r.margin; if (!best || p2 > best.profit) best = {...r, units: u2, profit: p2, inv: u2 * r.b[2]}; });
+      if (!best) return;
+      out.push({c: o.c, b: o.b, x: o.x, tb: o.tb, tx: o.tx, units: u1, margin: o.margin, inv: u1 * o.b[2], legProfit: p1,
+        back: best, profit: p1 + best.profit, round: true});
+    });
+    // a few per outbound commodity and per pair of places, so one cargo doesn't fill the list
+    out.sort((p, q) => q.profit - p.profit);
+    const perC = {}, perPair = {}, keep = [];
+    out.forEach(r => { const pk = [r.tb.place, r.tx.place].sort().join("~") + (s.from ? r.c.id + ">" + r.back.c.id : [r.c.id, r.back.c.id].sort().join("~"));   // without a start, A⇄B and B⇄A are the same loop
+      if ((perC[r.c.id] = (perC[r.c.id] || 0) + 1) > 3 || perPair[pk]) return; perPair[pk] = 1; keep.push(r); });
+    return keep;
+  }
+  function legBlock(r, i, side){
+    return `<div class="mk-legs">
+        <div class="mk-leg"><span class="cap">BUY</span><b>${esc(r.tb.name)}</b><small>${esc(placeName(r.tb))}</small>
+          <span><em>${fmt(r.b[2])}</em>/SCU · ${r.b[4] ? fmt(r.b[4]) + " SCU on sale" : "stock unknown"}${r.b[7] ? ` · <i class="${r.b[7] <= 3 ? "mk-old" : ""}" style="font-style:normal">${INV[r.b[7]].toLowerCase()}</i>` : ""} · <i class="${ageCls(r.b[9])}">${ago(r.b[9])}</i></span>
+          <button class="mk-rep" data-rep="${i}:buy:${side}" title="Wrong? Tell UEX what the terminal shows">REPORT TO UEX</button></div>
+        ${ARROW}
+        <div class="mk-leg s"><span class="cap">SELL</span><b>${esc(r.tx.name)}</b><small>${esc(placeName(r.tx))}</small>
+          <span><em>${fmt(r.x[3])}</em>/SCU · ${r.x[5] ? "wants " + fmt(r.x[5]) + " SCU" : "demand unknown"} · <i class="${ageCls(r.x[9])}">${ago(r.x[9])}</i></span>
+          <button class="mk-rep" data-rep="${i}:sell:${side}" title="Wrong? Tell UEX what the terminal shows">REPORT TO UEX</button></div>
+      </div>`;
+  }
+  function paintRoundTrips(box, s){
+    const tag = r => `${r.c.illegal ? '<span class="tag v">ILLEGAL</span>' : ""}${r.c.volatile ? '<span class="tag v">VOLATILE</span>' : ""}`;
+    box.innerHTML = ROUTES.map((r, i) => { const k = r.back; return `<div class="mk-route">
+      <div class="mk-rhead"><span class="n">${String(i + 1).padStart(2, "0")}</span><b>${esc(r.c.name)}</b>${tag(r)}<span class="mk-dim">out</span>
+        <span style="color:var(--dim)">⇄</span><b>${esc(k.c.name)}</b>${tag(k)}<span class="mk-dim">back</span>
+        <span class="sp"></span><span class="mk-profit">+${fmt(r.profit)}<small>aUEC round trip</small></span></div>
+      <div class="mk-trip"><span class="cap">OUT · ${fmt(r.units)} SCU · +${short(r.legProfit)}</span>${legBlock(r, i, "o")}</div>
+      <div class="mk-trip"><span class="cap">BACK · ${fmt(k.units)} SCU · +${short(k.profit)}</span>${legBlock(k, i, "k")}</div>
+      <div class="mk-rfoot"><span>cost out <em>${short(r.inv)}</em></span><span>cost back <em>${short(k.inv)}</em></span>
+        <span>return <em>${Math.round(r.profit / Math.max(1, r.inv) * 100)}%</em></span>
+        <span class="sp"></span>${s.ship ? `<button class="mk-btn" data-g="${i}:o" style="height:40px">Boxes out</button><button class="mk-btn" data-g="${i}:k" style="height:40px">Boxes back</button>` : ""}<button class="mk-btn buy" data-r="${i}">Buy this</button></div></div>`; }).join("");
+    const legOf = (i, side) => side === "k" ? ROUTES[+i].back : ROUTES[+i];
+    box.querySelectorAll("[data-rep]").forEach(b => b.addEventListener("click", () => {
+      const [i, side, w] = b.dataset.rep.split(":"), r = legOf(i, w); buzz(6);
+      openReport({tid: side === "buy" ? r.tb.id : r.tx.id, cid: r.c.id, side}); }));
+    box.querySelectorAll("[data-g]").forEach(b => b.addEventListener("click", () => {
+      const [i, w] = b.dataset.g.split(":"), r = legOf(i, w); buzz(8);
+      openGrid(s.ship, {cap: r.tb.maxBox || 32, target: r.units, where: r.tb.name, newName: r.c.name}); }));
+    box.querySelectorAll("[data-r]").forEach(b => b.addEventListener("click", () => {
+      const r = ROUTES[+b.dataset.r], k = r.back; buzz(10);
+      openLog("buy", {cid: r.c.id, tid: r.tb.id, scu: r.units, price: r.b[2], target: {tid: r.tx.id, name: r.tx.name, price: r.x[3]},
+        next: {cid: k.c.id, name: k.c.name, tid: k.tb.id, at: k.tb.name, price: k.b[2], scu: k.units, target: {tid: k.tx.id, name: k.tx.name, price: k.x[3]}}});
     }));
   }
 
@@ -2418,6 +2523,121 @@ tr.concept td:first-child small{color:var(--amber)}
     for (const id of ids){ try { SHIPS_GRID[id] = await getJSON("/api/market/ship?id=" + id); } catch { GRID_FAIL.add(id); } }
     gridFetching = false; after();
   }
+  // ----- Hangar tab (its own tab on the top bar) -----
+  function buildHangarPage(pg){
+    pg.classList.add("info");
+    pg.innerHTML = `<div id="mkHangarBody" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>`;
+    pg._shown = () => paintHangarPage();
+  }
+  async function paintHangarPage(){
+    const body = document.getElementById("mkHangarBody"); if (!body) return;
+    if (!ledgerLoaded || !TD){
+      body.innerHTML = `<div class="mk-empty">Getting the ship list from UEX…</div>`;
+      try { await Promise.all([loadLedger(), loadTrade()]); }
+      catch (e){ body.innerHTML = `<div class="mk-empty"><b>Couldn't get the ship list.</b><br>${esc(e.message)}<br><br>The PC needs an internet connection.</div>`; return; }
+    }
+    paintHangar(body);
+  }
+  // specs and stock loadout from the Star Citizen Wiki (via the PC), fetched once per ship
+  const SHIP_INFO = {}, INFO_WANT = new Set(), INFO_FAIL = new Set();
+  let infoFetching = false;
+  async function fetchShipInfo(after){
+    if (infoFetching || !INFO_WANT.size) return;
+    infoFetching = true;
+    const ids = [...INFO_WANT]; INFO_WANT.clear();
+    for (const id of ids){ try { SHIP_INFO[id] = await getJSON("/api/market/shipinfo?id=" + id); } catch { INFO_FAIL.add(id); } }
+    infoFetching = false; after();
+  }
+  const paidTotal = list => list.reduce((n, h) => n + (+h.paid || 0), 0);
+  function loadoutChips(h){
+    const d = SHIP_INFO[h.id];
+    if (!d){ if (!INFO_FAIL.has(h.id)) INFO_WANT.add(h.id); return INFO_FAIL.has(h.id) ? '<span class="cap">—</span>' : '<span class="cap">…</span>'; }
+    if (!d.found || !d.summary) return '<span class="cap">No game data yet</span>';
+    const s = d.summary, c = [];
+    const chip = (sec, label, val) => c.push(`<button class="mk-chip" data-info="${h.id}:${sec}" title="Show ${label.toLowerCase()}"><i>${label}</i>${esc(val)}</button>`);
+    if (s.weapons) chip("Weapons", "GUNS", s.weapons);
+    if (s.turrets) chip("Turrets", "TURRETS", String(s.turrets));
+    if (s.missiles) chip("Missiles", "MISSILES", String(s.missiles));
+    if (s.shields) chip("Shields", "SHIELDS", s.shields);
+    return c.length ? `<div class="mk-load">${c.join("")}</div>` : '<span class="cap">Unarmed</span>';
+  }
+  const num = (x, d = 0) => x == null || x === "" ? "—" : (+x).toLocaleString([], {maximumFractionDigits: d});
+  async function openShip(id, sec, after){
+    const v = TD && TD.ships.find(x => x.id === +id), h = hangarFor(id);
+    $("#mkShipTitle").textContent = v ? v.name : "Ship";
+    $("#mkShip").classList.add("show");
+    const body = $("#mkShipBody");
+    if (!SHIP_INFO[id]){
+      body.innerHTML = `<div class="mk-empty">Getting ${esc(v ? v.name : "the ship")} from the Star Citizen Wiki…</div>`;
+      try { SHIP_INFO[id] = await getJSON("/api/market/shipinfo?id=" + id); }
+      catch (e){ body.innerHTML = `<div class="mk-empty"><b>Couldn't get this ship.</b><br>${esc(e.message)}</div>`; return; }
+    }
+    const d = SHIP_INFO[id];
+    if (!d.found){ body.innerHTML = `<div class="mk-empty">The Star Citizen Wiki has no game data for ${esc(d.name)} yet${v && v.concept ? " (it isn't in the game yet)" : ""}.</div>${h ? mineBox(h) : ""}`; wireMine(h, after); return; }
+    const st = d.stats || {}, ab = d.about || {};
+    const tile = (l, val) => `<div><small>${l}</small><b>${val}</b></div>`;
+    const itemRow = r => `<tr><td><b>${esc(r.name)}</b><small>${[r.maker, r.grade ? "grade " + r.grade : "", r.cls].filter(Boolean).map(esc).join(" · ")}</small></td>
+      <td class="nw">${r.size != null ? "S" + r.size : ""}</td><td class="r nw">×${r.n}</td><td class="r nw">${r.dps ? num(r.dps) + " dps" : ""}</td></tr>`;
+    const secHtml = x => `<div class="mk-stop mk-shipsec" id="shipSec-${esc(x.name.replace(/\W+/g, ""))}"><h4>${esc(x.name)}<span class="sp"></span><span class="cnt">${x.items.reduce((n, r) => n + r.n, 0)}</span></h4>
+      <table class="mk-table mk-loadt"><colgroup><col><col style="width:70px"><col style="width:70px"><col style="width:120px"></colgroup><tbody>${x.items.map(itemRow).join("")}</tbody></table></div>`;
+    const turrets = [];   // identical turrets on one row
+    (d.turrets || []).forEach(t => { const k = JSON.stringify([t.kind, t.name, t.size, t.guns]); const hit = turrets.find(x => x._k === k);
+      if (hit) hit.n++; else turrets.push({...t, _k: k, n: 1}); });
+    const turHtml = turrets.length ? `<div class="mk-stop mk-shipsec" id="shipSec-Turrets"><h4>Turrets<span class="sp"></span><span class="cnt">${(d.turrets || []).length}</span></h4>
+      <table class="mk-table mk-loadt"><colgroup><col style="width:38%"><col></colgroup><tbody>${turrets.map(t => `<tr><td><b>${t.n > 1 ? t.n + "× " : ""}${esc(t.kind)}</b><small>${esc(t.name)}${t.size != null ? " · S" + t.size : ""}</small></td>
+        <td>${t.guns.length ? t.guns.map(g => `${g.n}× ${esc(g.name)} <span class="mk-dim">S${g.size}</span>${t.n > 1 ? ' <span class="mk-dim">each</span>' : ""}`).join("<br>") : '<span class="cap">no guns in the stock loadout</span>'}</td></tr>`).join("")}</tbody></table></div>` : "";
+    const secs = d.sections || [], first = ["Weapons"], rest = secs.filter(x => !first.includes(x.name));
+    const buy = d.buy || [], rent = d.rent || [];
+    body.innerHTML = `
+      <div class="mk-shiphead">${d.photo ? `<img src="${esc(d.photo)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}
+        <div class="t"><div class="mk-dim">${[ab.maker, ab.career, ab.role, ab.size ? "size " + ab.size : ""].filter(Boolean).map(esc).join(" · ")}</div>
+          ${ab.description ? `<p class="mk-desc">${esc(ab.description)}</p>` : ""}
+          <div class="mk-dim">${[d.links && d.links.wiki ? `<a href="${esc(d.links.wiki)}" target="_blank" rel="noopener">Wiki page</a>` : "", d.links && d.links.pledge ? `<a href="${esc(d.links.pledge)}" target="_blank" rel="noopener">RSI store</a>` : "", d.version ? "game data " + esc(d.version) : ""].filter(Boolean).join(" · ")}</div></div></div>
+      ${h ? mineBox(h) : ""}
+      <h4 class="mk-sub">Specs</h4>
+      <div class="mk-statgrid">
+        ${tile("Crew", st.crewMin != null ? (st.crewMax && st.crewMax !== st.crewMin ? `${st.crewMin}–${st.crewMax}` : st.crewMin) : "—")}
+        ${tile("Cargo", st.cargo ? num(st.cargo) + " SCU" : "—")}
+        ${tile("Size (L×B×H)", st.length ? `${num(st.length, 1)} × ${num(st.beam, 1)} × ${num(st.height, 1)} m` : "—")}
+        ${tile("Mass", st.mass ? num(st.mass / 1000, 1) + " t" : "—")}
+        ${tile("SCM / Max", st.scm ? `${num(st.scm)} / ${num(st.max)} m/s` : "—")}
+        ${tile("Boost", st.boost ? num(st.boost) + " m/s" : "—")}
+        ${tile("Pitch / Yaw / Roll", st.pitch != null ? `${num(st.pitch)} / ${num(st.yaw)} / ${num(st.roll)} °/s` : "—")}
+        ${tile("Hull", st.hull ? num(st.hull) + " HP" : "—")}
+        ${tile("Shields", st.shieldHp ? `${num(st.shieldHp)} HP${st.shieldType ? " · " + esc(st.shieldType) : ""}` : "—")}
+        ${tile("Pilot DPS", st.dps ? `${num(st.dps)}${st.alpha ? ` <span class="mk-dim">alpha ${num(st.alpha)}</span>` : ""}` : "—")}
+        ${tile("Missile damage", st.missileDmg ? num(st.missileDmg) : "—")}
+        ${tile("Quantum", st.qtSpeed ? `${num(st.qtSpeed / 1000)} km/s` : "—")}
+        ${tile("Quantum range", st.qtRange ? `${num(st.qtRange / 1e9, 1)} Gm` : "—")}
+        ${tile("Fuel (H / QT)", st.fuel != null ? `${num(st.fuel, 2)} / ${num(st.qtFuel, 2)} SCU` : "—")}
+        ${tile("Insurance claim", st.claim ? `${num(st.claim, 1)} min` : "—")}
+        ${tile("Expedite", st.expedite ? `${num(st.expedite, 1)} min · ${num(st.expediteCost)} aUEC` : "—")}
+        ${tile("Pledge price", st.msrp ? "$" + num(st.msrp) : "—")}
+      </div>
+      ${secs.filter(x => first.includes(x.name)).map(secHtml).join("")}${turHtml}${rest.map(secHtml).join("")}
+      ${buy.length || rent.length ? `<div class="mk-stop mk-shipsec" id="shipSec-Buy"><h4>Buy or rent in game</h4><table class="mk-table"><tbody>
+        ${buy.map(b => `<tr><td>${esc(b.at)}</td><td class="r nw">${num(b.price)} aUEC</td><td><span class="cap">BUY</span></td></tr>`).join("")}
+        ${rent.map(b => `<tr><td>${esc(b.at)}</td><td class="r nw">${num(b.price)} aUEC</td><td><span class="cap">RENT / DAY</span></td></tr>`).join("")}</tbody></table></div>` : ""}
+      <p class="mk-note">Stock loadout from the Star Citizen Wiki. Ships you've upgraded in game will differ.</p>`;
+    wireMine(h, after);
+    if (sec){ const el = document.getElementById("shipSec-" + sec.replace(/\W+/g, "")); if (el){ body.scrollTop += el.getBoundingClientRect().top - body.getBoundingClientRect().top - 4; el.classList.add("hit"); setTimeout(() => el.classList.remove("hit"), 1500); } }
+    else body.scrollTop = 0;
+  }
+  // your own notes for a ship, like the columns in a ships spreadsheet: what you paid and the insurance
+  function mineBox(h){
+    return `<div class="mk-stop"><h4>Yours <small>${HOW[h.how] || ""} · added ${new Date(h.added || Date.now()).toLocaleDateString([], {day: "numeric", month: "short", year: "numeric"})}</small></h4>
+      <div class="mk-mine"><label>Paid ($)<input class="mk-input" id="mkShipPaid" type="number" inputmode="decimal" min="0" step="any" value="${h.paid ?? ""}" style="width:130px"></label>
+      <label>Insurance<input class="mk-input" id="mkShipIns" list="mkShipInsList" value="${esc(h.ins || "")}" placeholder="e.g. LTI, 120 months" style="width:190px"></label>
+      <datalist id="mkShipInsList"><option value="LTI"><option value="120 months"><option value="72 months"><option value="24 months"><option value="10 years"><option value="6 months"><option value="3 months"></datalist>
+      <label style="flex:1;min-width:200px">Notes<input class="mk-input" id="mkShipNote" value="${esc(h.note || "")}" placeholder="Upgrades, CCU, where it's parked…"></label></div></div>`;
+  }
+  function wireMine(h, after){
+    if (!h) return;
+    const save = () => { const p = $("#mkShipPaid").value.trim(); if (p === "") delete h.paid; else h.paid = +p;
+      h.ins = $("#mkShipIns").value.trim(); h.note = $("#mkShipNote").value.trim(); if (!h.ins) delete h.ins; if (!h.note) delete h.note;
+      saveLedger(); if (after) after(); };
+    ["#mkShipPaid", "#mkShipIns", "#mkShipNote"].forEach(q => { const el = $(q); if (el) el.addEventListener("change", save); });
+  }
   function paintHangar(body){
     const isConcept = h => !!(TD.ships.find(x => x.id === h.id) || {}).concept;
     const hiddenC = SET().hideConcept ? hangar().filter(isConcept).length : 0;
@@ -2444,7 +2664,7 @@ tr.concept td:first-child small{color:var(--amber)}
         ${offers.map(o => `<div class="mk-stop" style="border-color:rgba(255,180,61,.45)"><h4 style="font-size:16px">${esc(o.h.name)} isn't in the game yet</h4>
           <p class="mk-note">It comes with ${o.miss.map(v => `<b>${esc(v.name)}</b>`).join(", ")} as loaner${o.miss.length === 1 ? "" : "s"}.</p>
           <div class="mk-actions"><button class="mk-btn go" data-loan="${esc(o.h.hid)}">Add ${o.miss.length === 1 ? "it" : "them"} as loaner${o.miss.length === 1 ? "" : "s"}</button></div></div>`).join("")}
-        <div class="mk-well" style="flex:1">${list.length ? `<table class="mk-table"><thead><tr><th>Ship</th><th class="r">Cargo</th><th>Type</th><th>Time</th><th></th></tr></thead><tbody>
+        <div class="mk-well" style="flex:1">${list.length ? `<table class="mk-table"><thead><tr><th>Ship</th><th class="r">Cargo</th><th>Type</th><th>Loadout</th><th></th></tr></thead><tbody>
           ${list.map(h => { const v = TD.ships.find(x => x.id === h.id) || {}; const ex = expired(h);
             const xs = extraScu(h), tot = shipScu(h);
             const open = !!FOLD[h.hid], g = SHIPS_GRID[h.id], mods = h.extra || [], nG = (g ? g.grids.length : 0) + mods.filter(e => e.part === "ship").reduce((n, e) => n + (e.n || 1), 0);
@@ -2454,11 +2674,11 @@ tr.concept td:first-child small{color:var(--amber)}
               ${nG || mods.length ? `<button class="mk-fold${open ? " open" : ""}" data-fold="${esc(h.hid)}" aria-expanded="${open}" aria-label="Show cargo for ${esc(h.name)}">›</button>` : `<span class="mk-fold-sp"></span>`}
               ${thumb(h.id, "mk-thumb")}<span><b>${esc(h.name)}</b><small>${esc(sum)}</small></span></div></td>
             <td class="r">${tot ? fmt(tot) + " SCU" : "—"}${xs ? `<small>incl. +${fmt(xs)}</small>` : ""}</td>
-            <td><button class="mk-chip" data-cycle="${esc(h.hid)}" title="Tap to change">${HOW[h.how] || h.how}</button></td>
-            <td class="nw ${ex ? "mk-stale" : h.how === "rented" && h.until - Date.now() < 86400000 ? "mk-old" : ""}">${h.how === "rented" ? leftText(h) : new Date(h.added || Date.now()).toLocaleDateString([], {day: "numeric", month: "short", year: "numeric"})}</td>
-            <td class="r" style="width:1%;white-space:nowrap"><button class="mk-x mk-up" data-extra="${esc(h.hid)}" title="Add a module, or cargo missing from the game data">+ CARGO</button> ${tot ? `<button class="mk-x mk-up" data-grid="${h.id}" title="See the cargo grid">GRID</button> ` : ""}${h.how === "rented" ? `<button class="mk-x mk-up" data-renew="${esc(h.hid)}" title="Rent it again for ${h.days || 1} day${(h.days || 1) === 1 ? "" : "s"}">+${h.days || 1}D</button> ` : ""}<button class="mk-x" data-rm="${esc(h.hid)}" aria-label="Remove ${esc(h.name)}">×</button></td></tr>${cargoSubRows(h, ex, open)}`; }).join("")}
+            <td><button class="mk-chip" data-cycle="${esc(h.hid)}" title="Tap to change">${HOW[h.how] || h.how}</button>${h.how === "rented" ? `<small class="${ex ? "mk-stale" : h.until - Date.now() < 86400000 ? "mk-old" : ""}">${leftText(h)}</small>` : ""}</td>
+            <td>${loadoutChips(h)}</td>
+            <td class="r" style="width:1%;white-space:nowrap"><button class="mk-x mk-up" data-extra="${esc(h.hid)}" title="Add a module, or cargo missing from the game data">+ CARGO</button> ${tot ? `<button class="mk-x mk-up" data-grid="${h.id}" title="See the cargo grid">GRID</button> ` : ""}${h.how === "rented" ? `<button class="mk-x mk-up" data-renew="${esc(h.hid)}" title="Rent it again for ${h.days || 1} day${(h.days || 1) === 1 ? "" : "s"}">+${h.days || 1}D</button> ` : ""}<button class="mk-x mk-up" data-info="${h.id}" title="Specs, loadout and where to buy it">INFO</button> <button class="mk-x" data-rm="${esc(h.hid)}" aria-label="Remove ${esc(h.name)}">×</button></td></tr>${cargoSubRows(h, ex, open)}`; }).join("")}
           </tbody></table>${hiddenC ? `<p class="mk-note" style="padding:10px 12px">${hiddenC} ship${hiddenC === 1 ? "" : "s"} not in the game yet hidden. Untick <b>Hide ships not in the game yet</b> to see ${hiddenC === 1 ? "it" : "them"}.</p>` : ""}` : hiddenC ? `<div class="mk-empty">All ${hiddenC} of your ships are hidden because they're not in the game yet.</div>` : `<div class="mk-empty">Your hangar is empty.<br>Add the ships you have, and the Routes list shows those first.</div>`}</div>`, {grow: true, head: `<label class="mk-check" style="min-height:0;font-size:14px;gap:6px"><input type="checkbox" id="hgHideC"${hideC ? " checked" : ""} style="width:18px;height:18px">Hide not in game yet</label>
-        <span class="cap">${list.filter(h => !expired(h)).length} SHIP${list.filter(h => !expired(h)).length === 1 ? "" : "S"}</span>${addOpen ? "" : `<button class="mk-btn go" id="hgAddShow" style="height:34px;font-size:12px">+ Add ship</button>`}`})}
+        <span class="cap">${list.filter(h => !expired(h)).length} SHIP${list.filter(h => !expired(h)).length === 1 ? "" : "S"}${paidTotal(list) ? ` · $${fmt(paidTotal(list))} PAID` : ""}</span>${addOpen ? "" : `<button class="mk-btn go" id="hgAddShow" style="height:34px;font-size:12px">+ Add ship</button>`}`})}
     </div>`;
     body.querySelector("#hgHideC").addEventListener("change", e => { SET().hideConcept = e.target.checked; saveLedger(); paintHangar(body); });
     const hs = body.querySelector("#hgAddShow"); if (hs) hs.addEventListener("click", () => { store.set("hangarAdd", true); buzz(6); paintHangar(body); setTimeout(() => { const q = body.querySelector("#hgQ"); if (q && window.innerWidth > 900) q.focus(); }, 50); });
@@ -2479,7 +2699,8 @@ tr.concept td:first-child small{color:var(--amber)}
       if (h.how === "rented"){ h.days = h.days || hgDays; h.until = Date.now() + h.days * 86400000; } else { delete h.until; }
       saveLedger(); buzz(6); paintHangar(body); }));
     body.querySelectorAll("[data-grid]").forEach(b => b.addEventListener("click", () => { buzz(6); openGrid(+b.dataset.grid, {target: shipScu(hangarFor(+b.dataset.grid) || {id: +b.dataset.grid})}); }));
-    fetchHangarGrids(() => { if (tradeView === "hangar" && document.getElementById("mkTradeBody") === body && body.isConnected) paintHangar(body); });
+    fetchHangarGrids(() => { if (body.isConnected) paintHangar(body); });
+    fetchShipInfo(() => { if (body.isConnected) paintHangar(body); });
     body.querySelectorAll("[data-fold]").forEach(b => b.addEventListener("click", () => {
       const k = b.dataset.fold; if (FOLD[k]) delete FOLD[k]; else FOLD[k] = 1; store.set("hangarOpen", FOLD); buzz(6); paintHangar(body); }));
     body.querySelectorAll("[data-fit]").forEach(b => b.addEventListener("click", () => {
@@ -2490,6 +2711,7 @@ tr.concept td:first-child small{color:var(--amber)}
       const [hid, i] = b.dataset.exdel.split(":"); const h = hangar().find(x => x.hid === hid); if (!h || !h.extra) return;
       h.extra.splice(+i, 1); if (SET().ship === h.id) SET().scu = shipScu(h); saveLedger(); buzz(10); paintHangar(body); })));
     body.querySelectorAll("[data-extra]").forEach(b => b.addEventListener("click", () => { buzz(6); openExtra(b.dataset.extra, () => paintHangar(body)); }));
+    body.querySelectorAll("[data-info]").forEach(b => b.addEventListener("click", () => { buzz(6); const [id, sec] = b.dataset.info.split(":"); openShip(+id, sec, () => paintHangar(body)); }));
     body.querySelectorAll("[data-renew]").forEach(b => b.addEventListener("click", () => {
       const h = hangar().find(x => x.hid === b.dataset.renew); if (!h) return;
       h.until = Math.max(Date.now(), h.until || 0) + (h.days || 1) * 86400000; saveLedger(); buzz(10); toast(`${h.name}: ${leftText(h)}`, true); paintHangar(body); }));
@@ -2784,6 +3006,7 @@ tr.concept td:first-child small{color:var(--amber)}
     }));
   }
   $("#mkGridClose").addEventListener("click", () => $("#mkGrid").classList.remove("show"));
+  $("#mkShipClose").addEventListener("click", () => $("#mkShip").classList.remove("show"));
 
 
   // ----- 3D cargo view: drag to turn, pinch or scroll to zoom (no libraries, draws on a canvas) -----
@@ -3032,12 +3255,18 @@ tr.concept td:first-child small{color:var(--amber)}
         ${UEXS.ready && run.trades.some(t => t.kind !== "cost" && !t.uexId) ? `<div class="mk-actions"><button class="mk-btn go" id="mkUexRun">Send ${run.trades.filter(t => t.kind !== "cost" && !t.uexId).length} to UEX</button></div>` : ""}
         <div class="mk-actions"><button class="mk-btn warn" id="mkEnd">End run</button></div>
       </div>
-      ${panel("02", "Trades", `${logPanel()}<div class="mk-well" style="flex:1">${trades.length ? `<table class="mk-table"><thead><tr><th>Type</th><th>What</th><th class="r">SCU</th><th class="r">Each</th><th class="r">Total</th><th></th></tr></thead><tbody>
+      ${panel("02", "Trades", `${run.next ? `<div class="mk-stop" style="border-color:rgba(61,214,255,.45)"><h4 style="font-size:16px">Round trip: the way back<span class="sp"></span><button class="mk-x" id="mkNextX" aria-label="Forget the return leg">×</button></h4>
+          <p class="mk-note">When you've sold, buy <b>${fmt(run.next.scu)} SCU ${esc(run.next.name)}</b> at <b>${esc(run.next.at)}</b> (${fmt(run.next.price)}/SCU) and sell it at <b>${esc(run.next.target.name)}</b> (${fmt(run.next.target.price)}/SCU).</p>
+          <div class="mk-actions"><button class="mk-btn buy" id="mkNextBuy">Buy the return cargo</button></div></div>` : ""}${logPanel()}<div class="mk-well" style="flex:1">${trades.length ? `<table class="mk-table"><thead><tr><th>Type</th><th>What</th><th class="r">SCU</th><th class="r">Each</th><th class="r">Total</th><th></th></tr></thead><tbody>
         ${trades.map(t => tradeRow(t)).join("")}</tbody></table>` : `<div class="mk-empty">Nothing logged yet. Tap <b>+ Buy</b> when you buy cargo.</div>`}</div>`, {grow: true})}
     </div>`;
     body.querySelector("#mkBuy").addEventListener("click", () => openLog("buy"));
     body.querySelector("#mkSell").addEventListener("click", () => openLog("sell"));
     body.querySelector("#mkCost").addEventListener("click", () => openLog("cost"));
+    const nb = body.querySelector("#mkNextBuy"); if (nb) nb.addEventListener("click", () => { const n = run.next; buzz(10);
+      const row = TD.rows.find(r => r[0] === n.cid && r[1] === n.tid);   // today's price if UEX has a newer one
+      openLog("buy", {cid: n.cid, tid: n.tid, scu: n.scu, price: row && row[2] ? row[2] : n.price, target: n.target}); });
+    const nx = body.querySelector("#mkNextX"); if (nx) nx.addEventListener("click", () => { delete run.next; saveLedger(); buzz(6); paintTrade(); });
     const ur = body.querySelector("#mkUexRun"); if (ur) ur.addEventListener("click", async () => { await sendRunToUex(run, ur); paintTrade(); });
     body.querySelector("#mkEnd").addEventListener("click", e => sureTap(e.currentTarget, "Tap again to end", () => {
       if (!run.trades.length){ LEDGER.runs.pop(); } else run.ended = Date.now();
@@ -3355,6 +3584,10 @@ tr.concept td:first-child small{color:var(--amber)}
     if (t.kind === "buy") toast(pre.target ? `Bought - sell at ${pre.target.name} for ${fmt(pre.target.price)}/SCU` : "Buy logged", true);
     else toast(t.kind === "sell" ? "Sale logged" : "Cost logged", true);
     if (pre.target && t.kind === "buy"){ run.target = {...pre.target, cid: t.cid}; saveLedger(); }
+    if (t.kind === "buy"){
+      if (pre.next){ run.next = pre.next; saveLedger(); }
+      else if (run.next && t.cid === run.next.cid){ delete run.next; saveLedger(); }   // bought the cargo for the way back
+    }
     tradeView = "run"; store.set("tradeView", tradeView); paintTrade();
   }
   function closeLog(){ $("#mkLog").classList.remove("show"); LOG = null; }
@@ -4787,6 +5020,7 @@ tr.concept td:first-child small{color:var(--amber)}
       if (p.type === "keybinds"){ pg.classList.add("info"); buildKeybindsPage(pg); }
       else if (p.type === "trade") buildTradePage(pg);
       else if (p.type === "items") buildItemsPage(pg);
+      else if (p.type === "hangar") buildHangarPage(pg);
       else if (p.type === "grid") buildGridPage(pg, p.key);
       else if (LAYOUTS[p.name]){
         used = new Set();

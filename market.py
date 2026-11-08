@@ -309,8 +309,8 @@ class Market:
                 "lootable": d.get("is_lootable"), "description": (desc or "").strip()[:1200], "image": img,
                 "stats": stats, "url": d.get("web_url"), "version": d.get("version")}
 
-    def ship_grids(self, vehicle_id):
-        """A ship's cargo grids from the Star Citizen Wiki, in SCU units (1 SCU = a 1.25 m cube)."""
+    def _wiki_vehicle(self, vehicle_id):
+        """(UEX vehicle, Star Citizen Wiki vehicle or None) for a UEX vehicle id."""
         vehicle_id = int(vehicle_id)
         v = next((x for x in self.uex("vehicles", DAY) if x["id"] == vehicle_id), None)
         if not v:
@@ -323,7 +323,7 @@ class Market:
                 d = d.get("data", d) if isinstance(d, dict) else None
             except Exception:
                 d = None
-        if not d or not d.get("cargo_grids"):
+        if not d or not (d.get("cargo_grids") or d.get("ports")):
             for q in (v.get("name") or "", name):
                 if not q:
                     continue
@@ -340,6 +340,13 @@ class Market:
                         break
                     except Exception:
                         pass
+        return v, d
+
+    def ship_grids(self, vehicle_id):
+        """A ship's cargo grids from the Star Citizen Wiki, in SCU units (1 SCU = a 1.25 m cube)."""
+        vehicle_id = int(vehicle_id)
+        v, d = self._wiki_vehicle(vehicle_id)
+        name = v.get("name_full") or v.get("name") or ""
         u = lambda m: max(0, int(round((m or 0) / 1.25)))
         grids = []
         for g in (d or {}).get("cargo_grids") or []:
@@ -350,6 +357,139 @@ class Market:
         grids.sort(key=lambda g: -g["scu"])
         return {"id": vehicle_id, "name": name, "scu": v.get("scu") or 0, "found": bool(d),
                 "capacity": (d or {}).get("cargo_capacity"), "grids": grids, "uexBoxes": v.get("container_sizes") or ""}
+
+    @staticmethod
+    def _text(x):
+        if isinstance(x, dict):
+            x = x.get("en_EN") or x.get("en") or next((v for v in x.values() if isinstance(v, str)), "")
+        return x if isinstance(x, str) else ""
+
+    def ship_info(self, vehicle_id):
+        """Specs and stock loadout of a ship, from the Star Citizen Wiki."""
+        v, d = self._wiki_vehicle(vehicle_id)
+        name = v.get("name_full") or v.get("name") or ""
+        out = {"id": int(vehicle_id), "name": name, "found": bool(d), "photo": v.get("url_photo") or ""}
+        if not d:
+            return out
+        n = lambda x: x if isinstance(x, (int, float)) else None
+
+        def item(e):
+            m = e.get("manufacturer") or {}
+            return {"name": e.get("name") or "?", "size": e.get("size"), "grade": e.get("grade") or "",
+                    "cls": e.get("class") or "", "maker": m.get("name") if isinstance(m, dict) else ""}
+
+        groups = {}   # section -> {key: {item, n}}
+        turrets = []
+
+        def add(sec, e, count=1):
+            it = item(e)
+            k = (it["name"], it["size"], it["grade"])
+            g = groups.setdefault(sec, {})
+            if k in g:
+                g[k]["n"] += count
+            else:
+                g[k] = dict(it, n=count)
+
+        SECT = {"Shield": "Shields", "PowerPlant": "Power plants", "Cooler": "Coolers", "QuantumDrive": "Quantum drive",
+                "JumpDrive": "Jump drive", "WeaponDefensive": "Countermeasures", "TractorBeam": "Utility",
+                "TowingBeam": "Utility", "WeaponMining": "Mining", "MiningModifier": "Mining", "SalvageHead": "Salvage",
+                "SalvageModifier": "Salvage", "SalvageFieldEmitter": "Salvage", "ToolArm": "Utility",
+                "EMP": "Utility", "QuantumInterdictionGenerator": "Utility", "Radar": "Radar"}
+
+        def walk(ports, turret):
+            for p in ports or []:
+                e = p.get("equipped_item")
+                if not e:
+                    continue
+                t, sub = e.get("type") or "", (e.get("sub_type") or "")
+                kids = p.get("ports") or e.get("ports") or []
+                pdc = "PDC" in sub.upper()
+                is_turret = t == "TurretBase" or (t == "Turret" and (pdc or "turret" in (p.get("name") or "").lower()
+                                                                     or "turret" in (e.get("name") or "").lower()))
+                if turret is None and is_turret:
+                    tu = dict(item(e), kind=("Point defence" if pdc else
+                                             "Manned turret" if t == "TurretBase" and "Remote" not in sub else "Remote turret"), guns={})
+                    turrets.append(tu)
+                    walk(kids, tu)
+                    continue
+                if t == "WeaponGun":
+                    if turret is not None:
+                        it = item(e)
+                        k = (it["name"], it["size"])
+                        turret["guns"][k] = turret["guns"].get(k, 0) + 1
+                    else:
+                        add("Weapons", e)
+                elif t in ("Missile",):
+                    add("Torpedoes" if "Torpedo" in sub else "Missiles", e)
+                elif t == "Bomb":
+                    add("Bombs", e)
+                elif t in SECT:
+                    add(SECT[t], e)
+                walk(kids, turret)
+
+        walk(d.get("ports"), None)
+        dps = {}
+        for w in ((d.get("weaponry") or {}).get("fixed_weapons") or {}).get("weapons") or []:
+            if w.get("name") and n(w.get("dps")):
+                dps[w["name"]] = w["dps"]
+        order = ["Weapons", "Missiles", "Torpedoes", "Bombs", "Shields", "Power plants", "Coolers", "Quantum drive",
+                 "Jump drive", "Countermeasures", "Mining", "Salvage", "Utility", "Radar"]
+        secs = []
+        for sec in order:
+            if sec in groups:
+                rows = sorted(groups[sec].values(), key=lambda r: (-(r["size"] or 0), r["name"]))
+                if sec == "Weapons":
+                    for r in rows:
+                        if r["name"] in dps:
+                            r["dps"] = dps[r["name"]]
+                secs.append({"name": sec, "items": rows})
+        tl = []
+        for tu in turrets:
+            tu["guns"] = [{"name": k[0], "size": k[1], "n": c} for k, c in sorted(tu["guns"].items(), key=lambda x: -(x[0][1] or 0))]
+            tl.append(tu)
+
+        def sizes(rows):   # "2×S3, 1×S2"
+            c = {}
+            for r in rows:
+                c[r["size"]] = c.get(r["size"], 0) + r["n"]
+            return ", ".join(f"{c[s]}×S{s}" for s in sorted(c, key=lambda s: -(s or 0)))
+        g = lambda s: next((x["items"] for x in secs if x["name"] == s), [])
+        out["summary"] = {"weapons": sizes(g("Weapons")), "turrets": len(tl),
+                          "missiles": sum(r["n"] for r in g("Missiles")) + sum(r["n"] for r in g("Torpedoes")),
+                          "shields": sizes(g("Shields"))}
+        sp, ag, q, dim = d.get("speed") or {}, d.get("agility") or {}, d.get("quantum") or {}, d.get("sizes") or d.get("dimension") or {}
+        crew, ins, sh, wp = d.get("crew") or {}, d.get("insurance") or {}, d.get("shield") or {}, d.get("weaponry") or {}
+        m = d.get("manufacturer") or {}
+        out["about"] = {"maker": m.get("name") if isinstance(m, dict) else "", "career": d.get("career") or "",
+                        "role": d.get("role") or "", "size": d.get("size_class"),
+                        "description": self._text(d.get("game_description"))[:1200]}
+        out["stats"] = {
+            "crewMin": crew.get("min"), "crewMax": crew.get("max"),
+            "length": dim.get("length"), "beam": dim.get("beam") or dim.get("width"), "height": dim.get("height"),
+            "mass": n(d.get("mass_total")) or n(d.get("mass")), "cargo": d.get("cargo_capacity"),
+            "scm": sp.get("scm"), "max": sp.get("max"), "boost": sp.get("boost_forward"),
+            "pitch": ag.get("pitch"), "yaw": ag.get("yaw"), "roll": ag.get("roll"),
+            "hull": n(d.get("health")), "shieldHp": n(d.get("shield_hp")) or n(sh.get("hp")), "shieldType": sh.get("face_type") or "",
+            "dps": n(wp.get("pilot_dps")), "alpha": n(wp.get("pilot_alpha")), "missileDmg": n(wp.get("total_missile_damage")),
+            "qtSpeed": n(q.get("quantum_speed")), "qtRange": n(q.get("quantum_range")), "qtSpool": n(q.get("quantum_spool_time")),
+            "fuel": n((d.get("fuel") or {}).get("capacity")), "qtFuel": n(q.get("quantum_fuel_capacity")),
+            "claim": n(ins.get("claim_time")), "expedite": n(ins.get("expedite_time")), "expediteCost": n(ins.get("expedite_cost")),
+            "msrp": n(d.get("msrp")), "warbond": n(d.get("warbond_price")),
+        }
+        if isinstance(out["stats"]["missileDmg"], dict):
+            out["stats"]["missileDmg"] = out["stats"]["missileDmg"].get("total")
+        buy = [p for p in ((d.get("uex_prices") or {}).get("purchase") or []) if n(p.get("price_buy"))]
+        rent = [p for p in ((d.get("uex_prices") or {}).get("rental") or (d.get("uex_prices") or {}).get("rent") or [])
+                if n(p.get("price_rent"))]
+        rent += [p for p in ((d.get("uex_prices") or {}).get("purchase") or []) if n(p.get("price_rent"))]
+        where = lambda p: p.get("terminal_name") or ""
+        out["buy"] = sorted([{"price": p["price_buy"], "at": where(p)} for p in buy], key=lambda x: x["price"])[:6]
+        out["rent"] = sorted([{"price": p["price_rent"], "at": where(p)} for p in rent], key=lambda x: x["price"])[:6]
+        out["sections"] = secs
+        out["turrets"] = tl
+        out["links"] = {"pledge": d.get("pledge_url") or "", "wiki": (d.get("curated_data") or {}).get("page_url") or ""}
+        out["version"] = d.get("version") or ""
+        return out
 
     def shopping(self, ids):
         """Shops for each starred item, grouped by place, best stops first."""
@@ -392,7 +532,7 @@ class Market:
     def game_log(self, sc_path, imported=()):
         """Commodity buys and sells the game wrote to Game.log (this session) and recent logbackups."""
         if not sc_path or not os.path.isdir(sc_path):
-            return {"found": False, "reason": "scPath isn't set in config.json, so Flightdeck can't find the game's log", "trades": []}
+            return {"found": False, "reason": "the Star Citizen folder (scPath) isn't set in mydata\\config.local.json, so Flightdeck can't find the game's log", "trades": []}
         files = []
         main = os.path.join(sc_path, "Game.log")
         if os.path.exists(main):
