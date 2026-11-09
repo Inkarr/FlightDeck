@@ -998,7 +998,7 @@ class Handler(BaseHTTPRequestHandler):
                 ui = int(max(os.path.getmtime(os.path.join(STATIC_DIR, f)) for f in os.listdir(STATIC_DIR)))
             except Exception:
                 ui = 0
-            return self._json(200, {"ok": True, "backend": backend.name, "rev": REV, "ui": ui})
+            return self._json(200, {"ok": True, "backend": backend.name, "rev": REV, "ui": ui, "ledger": MARKET.ledger_rev()})
         if path == "/":
             path = "/index.html"
         full = os.path.normpath(os.path.join(STATIC_DIR, path.lstrip("/")))
@@ -1042,6 +1042,8 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/api/market/gamelog":
                 imp = MARKET.ledger().get("settings", {}).get("imported", [])
                 return self._json(200, MARKET.game_log(CONFIG.get("scPath", ""), imp))
+            if path == "/api/market/whereami":
+                return self._json(200, MARKET.where_am_i(CONFIG.get("scPath", "")))
             if path == "/api/market/gamelog-lines":
                 return self._json(200, MARKET.log_lines(CONFIG.get("scPath", ""), arg("q", "."), min(500, int(arg("n", "150")))))
             if path == "/api/market/ship":
@@ -1102,6 +1104,8 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/market/ledger":
             try:
                 return self._json(200, MARKET.save_ledger(body.get("ledger")))
+            except market.LedgerConflict:
+                return self._json(409, {"error": "changed on another device", "ledger": MARKET.ledger()})
             except Exception as ex:
                 return self._json(400, {"error": str(ex)})
         if path.startswith("/api/market/uex"):

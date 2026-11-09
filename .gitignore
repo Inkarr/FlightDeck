@@ -23,3 +23,6 @@ __pycache__/
 # Backups
 backup-*/
 static/index.backup-*.html
+
+# Windows shortcuts
+*.lnk

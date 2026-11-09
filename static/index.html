@@ -743,6 +743,8 @@ nav button.fav-tab.active .ic{filter:drop-shadow(0 0 6px rgba(255,180,61,.7))}
 /* ---------- Trade + Items tabs (market) ---------- */
 .mk-input,.mk select{height:44px;border-radius:8px;border:1px solid var(--edge-hi);background:#05090f;color:var(--text);font-family:var(--font);font-size:17px;padding:0 10px;min-width:0;-webkit-user-select:text;user-select:text}
 .mk-input:focus,.mk select:focus{outline:none;border-color:var(--cyan)}
+.mk > .col{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mk > .col > .panel:not(.grow){flex-shrink:0}
 .mk{flex:1;min-height:0;display:grid;grid-template-columns:minmax(300px,340px) minmax(0,1fr);gap:14px}
 .mk .panel{min-height:0}
 .mk-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:none}
@@ -815,6 +817,21 @@ nav button.fav-tab.active .ic{filter:drop-shadow(0 0 6px rgba(255,180,61,.7))}
 .mk-kind.buy{color:var(--amber);border-color:rgba(255,180,61,.45)}
 .mk-kind.sell{color:var(--green);border-color:rgba(70,227,154,.45)}
 .mk-kind.cost{color:#ff9a9a;border-color:rgba(255,90,90,.45)}
+.mk-kind.store,.mk-kind.load{color:var(--cyan);border-color:rgba(61,214,255,.45)}
+.mk-moved{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.mk-table tr.grp td{padding-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid var(--well-edge)}
+#mkSto .dialog{width:min(560px,94vw);text-align:left;display:flex;flex-direction:column;gap:12px}
+#mkSto .dialog input,#mkSto .dialog select{width:100%;margin:0;font-family:var(--font);font-size:18px;letter-spacing:.02em;text-align:left;padding:0 12px;height:46px;border-radius:8px;background:#05090f;color:var(--text);border:1px solid var(--edge-hi)}
+#mkSto .mk-seg{flex-wrap:nowrap}
+#mkSto .mk-seg button{width:auto;flex:1;height:44px;padding:0;font-size:14px;letter-spacing:.16em;background:#0b1622;color:var(--dim);border:1px solid #22384e}
+#mkSto .mk-seg button.on{border-color:var(--cyan);color:var(--cyan);background:#0d2236}
+#mkSto .mk-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#mkSto .mk-three > label{min-width:0}
+#mkSto .mk-total{font-family:var(--mono);font-size:22px;color:var(--text);text-align:right}
+#mkSto .mk-hint{font-size:14px;color:var(--dim2);min-height:18px}
+#mkSto .fv-dlg-btns{display:flex;gap:10px}
+#mkSto .fv-dlg-btns button{flex:1}
+#mkSto .mk-pick > button:first-child{width:100%;margin:0;letter-spacing:.01em;text-transform:none;font-weight:400}
 .mk-well{border-radius:10px;background:#060c13;border:1px solid var(--well-edge);overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0}
 .mk-cargo{display:flex;gap:6px;flex-wrap:wrap;flex:none}
 .mk-cargo span{font-family:var(--mono);font-size:13px;padding:4px 10px;border-radius:999px;border:1px solid rgba(79,210,255,.4);color:var(--cyan);background:#071624}
@@ -992,6 +1009,20 @@ tr.concept td:first-child small{color:var(--amber)}
 .mk-mine label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .mk-trip{display:flex;flex-direction:column;gap:4px;margin-top:6px}
 .mk-trip>.cap{color:var(--cyan)}
+.mk-wallet{display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:12px;background:#060c13;border:1px solid var(--well-edge);text-align:left}
+.mk-wallet>div{flex:1;min-width:260px}
+.mk-wallet small{display:block;margin-top:2px}
+.mk-ldbox{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,180,61,.45);background:#0b1118}
+.mk-ldbox.ok{border-color:rgba(70,227,154,.5)}
+.mk-ldbox.ok>.cap{color:var(--green)}
+.mk-ldc{display:flex;flex-direction:column;gap:4px}
+.mk-ldr{display:flex;align-items:center;gap:8px}
+.mk-ldr .sz{font-family:var(--mono);font-size:13px;width:64px;color:var(--dim2)}
+.mk-ldr .ct{font-family:var(--mono);min-width:64px;text-align:center}
+.mk-ldr.ok .ct b{color:var(--green)}
+.mk-ldr .mk-x{height:36px;min-width:40px}
+.mk-runship{display:flex;align-items:center;gap:8px}
+.mk-runship select{flex:1;min-width:0;height:36px;border-radius:8px;background:#05090f;color:var(--text);border:1px solid var(--edge-hi);font-size:15px;padding:0 8px}
 .mk-desc{margin:0;color:var(--dim2);font-size:15px;line-height:1.4;-webkit-user-select:text;user-select:text}
 .mk-stop{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--edge);background:#08121c;flex:none}
 .mk-stop h4{margin:0;display:flex;align-items:baseline;gap:10px;font-size:19px}
@@ -1123,6 +1154,22 @@ tr.concept td:first-child small{color:var(--amber)}
     <p>Set in config.json on the PC</p>
     <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" aria-label="PIN">
     <button id="pinGo">Connect</button>
+  </div>
+</div>
+<div class="overlay" id="mkSto">
+  <div class="dialog" role="dialog" aria-labelledby="mkStoTitle">
+    <h2 id="mkStoTitle">Storage</h2>
+    <div class="mk-seg" id="mkStoKind" role="group" aria-label="What"><button type="button" data-k="cargo">Cargo</button><button type="button" data-k="item">Item</button></div>
+    <div class="mk-form">
+      <label id="mkStoComL">Commodity<div class="mk-pick"><button type="button" id="mkStoComBtn"><span></span></button></div><select id="mkStoCom" hidden></select></label>
+      <label id="mkStoItemL">Item<input id="mkStoItem" maxlength="80" placeholder="e.g. Morozov-SH helmet, P4-AR rifle" autocomplete="off"></label>
+      <label id="mkStoWhereL">Where it is<div class="mk-pick"><button type="button" id="mkStoWhereBtn"><span></span></button></div><select id="mkStoWhere" hidden></select></label>
+      <div class="mk-three"><label><span id="mkStoQtyCap">SCU</span><input id="mkStoQty" type="number" inputmode="decimal" min="0" step="any"></label>
+        <label id="mkStoPriceL"><span id="mkStoPriceCap">Paid per SCU</span><input id="mkStoPrice" type="number" inputmode="decimal" min="0" step="any"></label>
+        <label id="mkStoNoteL">Note<input id="mkStoNote" maxlength="80" placeholder="e.g. 2 × 16 SCU boxes" autocomplete="off"></label></div>
+    </div>
+    <div class="mk-hint" id="mkStoHint"></div>
+    <div class="fv-dlg-btns"><button id="mkStoCancel" class="ghost dim">Cancel</button><button id="mkStoOk">Save</button></div>
   </div>
 </div>
 <div class="overlay" id="mkLog">
@@ -2080,11 +2127,31 @@ tr.concept td:first-child small{color:var(--amber)}
     try { LEDGER = await getJSON("/api/market/ledger"); ledgerLoaded = true; } catch (e) { toast("Couldn't load your trade log: " + e.message); }
     try { UEXS = await getJSON("/api/market/uex"); } catch {}
   }
+  // Several devices (iPad, the PC's browser) share one trade log. Each save says which version it was based on;
+  // if another device saved in between, the PC refuses it and this device shows the latest instead.
+  let ledgerSaving = false;
   function saveLedger(){
     clearTimeout(ledgerSaveT);
     ledgerSaveT = setTimeout(async () => {
-      try { await api("market/ledger", {ledger: LEDGER}); } catch (e) { toast("Couldn't save: " + e.message); }
+      ledgerSaveT = null; ledgerSaving = true;
+      try {
+        const r = await fetch("/api/market/ledger", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ledger: LEDGER, pin})});
+        const j = await r.json().catch(() => ({}));
+        if (r.status === 409 && j.ledger){ LEDGER = j.ledger; toast("Your trade log was changed on another device. This is the latest - make your last change again."); repaintMarket(); }
+        else if (!r.ok) throw new Error(j.error || r.status);
+        else LEDGER._rev = j._rev;
+      } catch (e) { toast("Couldn't save: " + e.message); }
+      finally { ledgerSaving = false; }
     }, 400);
+  }
+  async function syncLedger(rev){   // another device saved: pick up its changes (not while you're in the middle of something here)
+    if (!ledgerLoaded || ledgerSaveT || ledgerSaving || rev === LEDGER._rev || document.querySelector(".overlay.show")) return;
+    try { const d = await getJSON("/api/market/ledger"); if (ledgerSaveT || ledgerSaving || document.querySelector(".overlay.show")) return;
+      LEDGER = d; repaintMarket(); } catch {}
+  }
+  function repaintMarket(){
+    if (document.getElementById("mkTradeBody") && TD) paintTrade();
+    if (document.getElementById("mkHangarBody") && TD) paintHangarPage();
   }
   const SET = () => (LEDGER.settings = LEDGER.settings || {});
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -2117,12 +2184,13 @@ tr.concept td:first-child small{color:var(--amber)}
     (r.trades || []).forEach(t => {
       if (t.kind === "cost"){ costs += +t.amount || 0; return; }
       const v = (+t.scu || 0) * (+t.price || 0);
-      if (t.kind === "buy"){ spent += v; cargo[t.name] = (cargo[t.name] || 0) + (+t.scu || 0); }
+      if (t.kind === "buy" || t.kind === "load"){ spent += v; cargo[t.name] = (cargo[t.name] || 0) + (+t.scu || 0); }
+      else if (t.kind === "store"){ spent -= v; cargo[t.name] = (cargo[t.name] || 0) - (+t.scu || 0); }   // what you paid goes with it into storage
       else { earned += v; cargo[t.name] = (cargo[t.name] || 0) - (+t.scu || 0); }
     });
     Object.keys(cargo).forEach(k => { if (cargo[k] <= 0) delete cargo[k]; });
     // time = first trade to last trade (a run still going counts up to now)
-    const ts = (r.trades || []).map(t => t.ts).filter(Boolean).sort((a, b) => a - b);
+    const ts = (r.trades || []).filter(t => t.kind !== "store" && t.kind !== "load").map(t => t.ts).filter(Boolean).sort((a, b) => a - b);   // moving cargo in or out of storage isn't trading time
     const from = ts.length ? ts[0] : r.started, to = r.ended ? (ts.length > 1 ? ts[ts.length - 1] : r.ended) : Date.now();
     const ms = Math.max(60000, to - from);
     const profit = earned - spent - costs;
@@ -2133,7 +2201,7 @@ tr.concept td:first-child small{color:var(--amber)}
     pg.classList.add("info");
     pg.innerHTML = `<div class="mk-bar" style="margin-bottom:12px">
         <div class="mk-seg mk-views" role="tablist" aria-label="Trade">
-          <button data-v="routes">Routes</button><button data-v="run">Current run</button><button data-v="ledger">Ledger</button></div>
+          <button data-v="routes">Routes</button><button data-v="run">Current run</button><button data-v="ledger">Ledger</button><button data-v="stored">Storage</button></div>
         <span class="sp"></span><span class="cap" id="mkTdAge"></span>
         <button class="hbtn" id="mkUexBtn" title="Send your trades to your UEX Trade Log" style="width:auto;padding:0 14px"><span class="mk-uexdot" id="mkUexDot"></span>UEX</button>
         <button class="hbtn" id="mkTdRefresh" title="Get the latest prices"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/></svg><span class="t">Prices</span></button>
@@ -2152,6 +2220,8 @@ tr.concept td:first-child small{color:var(--amber)}
     const run = activeRun(), vb = document.querySelector('.mk-views [data-v="run"]');
     const nNew = newLogTrades().length;
     if (vb) vb.innerHTML = "Current run" + (run ? '<span class="cnt">ON</span>' : "") + (nNew ? `<span class="cnt" style="background:var(--cyan)">${nNew} NEW</span>` : "");
+    const sb = document.querySelector('.mk-views [data-v="stored"]'), nSt = ledgerLoaded ? storage().length : 0;
+    if (sb) sb.innerHTML = "Storage" + (nSt ? `<span class="cnt" style="background:var(--cyan)">${nSt}</span>` : "");
     if (tradeView !== "run" && Date.now() - glogAt > 30000) loadGameLog().then(f => { if (f && document.getElementById("mkTradeBody")) { const n = newLogTrades().length; if (n !== nNew) paintTrade(); } });
     if (!ledgerLoaded || !TD){
       body.innerHTML = `<div class="mk-empty">Getting trade prices from UEX…</div>`;
@@ -2163,7 +2233,12 @@ tr.concept td:first-child small{color:var(--amber)}
     if (dot){ dot.classList.toggle("on", !!UEXS.ready); dot.parentElement.title = UEXS.ready ? `Linked to UEX${UEXS.user ? " as " + UEXS.user : ""}${UEXS.autoSend ? " · sending automatically" : ""}` : "Send your trades to your UEX Trade Log"; }
     const a = document.getElementById("mkTdAge");
     if (a) a.textContent = "UEX prices · fetched " + (TD.age == null ? "now" : ago(Date.now() / 1000 - TD.age)) + " ago";
-    if (tradeView === "run") paintRun(body); else if (tradeView === "ledger") paintLedger(body); else paintRoutes(body);
+    // repainting the same view keeps where you'd scrolled to (tapping + on the loading check, ticking things off...)
+    const same = body.dataset.view === tradeView, sel = ".mk > .col, .mk-scroll, .mk-well";
+    const keep = same ? [...body.querySelectorAll(sel)].map(e => e.scrollTop) : [];
+    if (tradeView === "run") paintRun(body); else if (tradeView === "ledger") paintLedger(body); else if (tradeView === "stored") paintStored(body); else paintRoutes(body);
+    body.dataset.view = tradeView;
+    if (keep.length) body.querySelectorAll(sel).forEach((e, i) => { if (keep[i]) e.scrollTop = keep[i]; });
   }
 
   // ----- Routes -----
@@ -2193,7 +2268,8 @@ tr.concept td:first-child small{color:var(--amber)}
           : `<p class="mk-note" style="margin-top:-4px">${hasHangar ? "None of your ships carry cargo." : "Add your ships on the <b>Hangar</b> tab to shorten this list."}</p>`}
         <div class="mk-two">
           <label>Cargo (SCU)<input class="mk-input" id="mkScu" type="number" inputmode="numeric" min="1" value="${s.scu || ""}" placeholder="e.g. 96"></label>
-          <label>Budget (aUEC)<input class="mk-input" id="mkBudget" type="number" inputmode="numeric" min="0" value="${s.budget || ""}" placeholder="no limit"></label></div>
+          <label><span style="display:flex;align-items:center;gap:6px;white-space:nowrap;height:16px">${walletNow() ? "Budget" : "Budget (aUEC)"}${walletNow() ? `<button type="button" class="mk-x mk-up${s.useWallet ? " on" : ""}" id="mkUseWallet" title="Use your wallet estimate from Ledger" style="height:20px;padding:0 6px;font-size:10px;margin-left:auto${s.useWallet ? ";border-color:var(--cyan);color:var(--cyan)" : ""}">${s.useWallet ? "✓ " : ""}WALLET</button>` : ""}</span>
+            <input class="mk-input" id="mkBudget" type="number" inputmode="numeric" min="0" value="${s.useWallet && walletNow() ? walletNow().est : s.budget || ""}" placeholder="no limit"${s.useWallet && walletNow() ? " disabled" : ""}></label></div>
         ${aboardNow() ? `<label class="mk-check" style="min-height:30px;margin-top:-4px"><input type="checkbox" id="mkAboard"${s.countAboard === false ? "" : " checked"}>Allow for cargo aboard (${fmt(aboardNow())} SCU) · ${fmt(Math.max(0, (+s.scu || 0) - aboardNow()))} SCU free</label>` : ""}
         <label>Trip<div class="mk-seg" id="mkTrip"><button type="button" data-t="one" class="${s.round ? "" : "on"}">One way</button><button type="button" data-t="round" class="${s.round ? "on" : ""}">Round trip</button></div></label>
         <label>Starting from<div class="mk-pick"><button type="button" id="mkFrom" class="${s.from ? "" : "any"}"><span>${esc(pickLabel(s.from) || "Anywhere")}</span></button>${s.from ? '<button class="mk-x" data-clr="from" aria-label="Clear">×</button>' : ""}</div></label>
@@ -2218,6 +2294,7 @@ tr.concept td:first-child small{color:var(--amber)}
     const all = body.querySelector("#mkAllShips"); if (all) all.addEventListener("change", e => { s.allShips = e.target.checked; saveLedger(); paintRoutes(body); });
     body.querySelector("#mkScu").addEventListener("input", e => { s.scu = Math.max(0, +e.target.value || 0); re(); });
     body.querySelector("#mkBudget").addEventListener("input", e => { s.budget = Math.max(0, +e.target.value || 0); re(); });
+    const uw = body.querySelector("#mkUseWallet"); if (uw) uw.addEventListener("click", () => { s.useWallet = !s.useWallet; buzz(8); saveLedger(); paintRoutes(body); });
     body.querySelector("#mkFrom").addEventListener("click", () => openPlaces("from", () => paintRoutes(body)));
     body.querySelector("#mkTo").addEventListener("click", () => openPlaces("to", () => paintRoutes(body)));
     body.querySelector("#mkAvoid").addEventListener("click", () => openPlaces("avoid", () => paintRoutes(body)));
@@ -2230,7 +2307,7 @@ tr.concept td:first-child small{color:var(--amber)}
   }
   function calcRoutes(){
     const box = document.getElementById("mkRoutes"); if (!box) return;
-    const s = SET(), aboardScu = s.countAboard === false ? 0 : aboardNow(), scu = Math.max(0, (+s.scu || 0) - aboardScu), budget = +s.budget || 0, maxAge = (s.maxAge ?? 7) * 86400, now = Date.now() / 1000;
+    const s = SET(), aboardScu = s.countAboard === false ? 0 : aboardNow(), scu = Math.max(0, (+s.scu || 0) - aboardScu), budget = runBudget(), maxAge = (s.maxAge ?? 7) * 86400, now = Date.now() / 1000;
     if (!scu && aboardScu){ box.innerHTML = `<div class="mk-empty">Your hold is full: ${fmt(aboardScu)} SCU aboard from your current run.<br>Untick <b>Allow for cargo aboard</b> to plan as if it were empty.</div>`;
       document.getElementById("mkRouteCount").textContent = ""; return; }
     if (!scu){ box.innerHTML = `<div class="mk-empty">Choose your ship, or type how many <b>SCU</b> of cargo you can carry, to see the best routes.</div>`;
@@ -2308,6 +2385,159 @@ tr.concept td:first-child small{color:var(--amber)}
       openLog("buy", {cid: r.c.id, tid: r.tb.id, scu: r.units, price: r.b[2], target: {tid: r.tx.id, name: r.tx.name, price: r.x[3]}});
     }));
   }
+
+  // ----- Storage: cargo and items you've left at stations around the 'verse -----
+  const storage = () => (LEDGER.storage = LEDGER.storage || []);
+  const isTrade = t => t.kind === "buy" || t.kind === "sell";
+  const placeLabel = k => { const t = placeIndex(true)[k]; return t ? `${placeName(t)} · ${t.sys}` : (k || "").split("|").reverse().join(" · "); };
+  function bestSell(cid, k){   // the best UEX sell price for a commodity in the same system as where it's stored
+    const sys = (k || "").split("|")[0]; let best = null;
+    TD.rows.forEach(r => { const t = TM[r[1]]; if (r[0] === cid && r[3] > 0 && r[8] !== 7 && t && t.sys === sys && (!best || r[3] > best.price)) best = {price: r[3], t, here: placeKey(t) === k}; });
+    return best;
+  }
+  function addLot(lot){   // same cargo at the same place: one pile, at the average price paid
+    if (lot.kind === "cargo"){
+      const hit = storage().find(x => x.kind === "cargo" && x.cid === lot.cid && x.where === lot.where);
+      if (hit){ const tot = hit.scu + lot.scu; hit.price = tot ? (hit.scu * hit.price + lot.scu * lot.price) / tot : 0; hit.scu = tot;
+        if (lot.note) hit.note = [hit.note, lot.note].filter(Boolean).join("; "); return hit; }
+    }
+    storage().push(lot); return lot;
+  }
+  function undoMove(t){   // deleting a STORE or LOAD line on a run puts storage back how it was
+    const lot = storage().find(x => x.sid === t.sid);
+    if (t.kind === "store"){ if (lot){ lot.scu -= +t.scu || 0; if (lot.scu <= 0.001) LEDGER.storage = storage().filter(x => x !== lot); } }
+    else if (lot) lot.scu += +t.scu || 0;
+    else addLot({sid: t.sid || uid(), kind: "cargo", cid: t.cid, name: t.name, scu: +t.scu || 0, price: +t.price || 0, where: t.where || "", ts: Date.now()});
+  }
+  function paintStored(body){
+    const lots = storage(), cargo = lots.filter(x => x.kind === "cargo"), items = lots.filter(x => x.kind === "item");
+    const byPlace = list => { const g = {}; list.forEach(x => (g[x.where] = g[x.where] || []).push(x));
+      return Object.entries(g).sort((a, b) => placeLabel(a[0]).localeCompare(placeLabel(b[0]))); };
+    const cScu = cargo.reduce((n, x) => n + x.scu, 0), cPaid = cargo.reduce((n, x) => n + x.scu * x.price, 0);
+    const iPaid = items.reduce((n, x) => n + (x.qty || 1) * (x.price || 0), 0);
+    body.innerHTML = `<div class="mk" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
+      ${panel("01", "Cargo In Storage", `<div class="mk-well" style="flex:1">${cargo.length ? `<table class="mk-table"><thead><tr><th>Commodity</th><th class="r">SCU</th><th class="r">Paid</th><th class="r">Best sell now</th><th></th></tr></thead><tbody>
+        ${byPlace(cargo).map(([k, list]) => `<tr class="grp"><td colspan="5">${esc(placeLabel(k))}</td></tr>` + list.map(x => { const b = bestSell(x.cid, k), gain = b ? (b.price - x.price) * x.scu : 0;
+          return `<tr><td><b>${esc(x.name)}</b><small>${esc(x.note || "")}</small><small>since ${new Date(x.ts).toLocaleDateString([], {day: "numeric", month: "short"})}</small></td>
+          <td class="r">${fmt(x.scu)}</td><td class="r">${fmt(x.price)}<small>${short(x.scu * x.price)} total</small></td>
+          <td class="r">${b ? `${fmt(b.price)}<small class="${gain >= 0 ? "mk-pos" : "mk-neg"}">${signed(gain)}</small><small>${b.here ? "here" : esc(b.t.name)}</small>` : '<span class="cap">no buyer listed</span>'}</td>
+          <td class="r" style="width:1%;white-space:nowrap"><button class="mk-x mk-up" data-load="${esc(x.sid)}" title="Put it back in your ship, on your current run">LOAD</button> <button class="mk-x mk-up" data-sed="${esc(x.sid)}">EDIT</button><br><button class="mk-x" data-srm="${esc(x.sid)}" aria-label="Remove" style="margin-top:4px">×</button></td></tr>`; }).join("")).join("")}
+        </tbody></table>` : `<div class="mk-empty">No cargo in storage.<br>On <b>Current run</b>, tap <b>Leave some at a station</b> when cargo doesn't fit, or add it here.</div>`}</div>
+        <p class="mk-note">In game you can sell straight from a station's storage at its commodity terminal. Tap <b>LOAD</b> to bring it onto your current run (at what you paid), then log the sale as usual.</p>`,
+        {grow: true, head: `<span class="cap">${cScu ? `${fmt(cScu)} SCU · ${short(cPaid)} PAID` : ""}</span><button class="mk-btn go" id="mkStAddC" style="height:34px;font-size:12px">+ Add cargo</button>`})}
+      ${panel("02", "Items In Storage", `<div class="mk-well" style="flex:1">${items.length ? `<table class="mk-table"><thead><tr><th>Item</th><th class="r">Qty</th><th class="r">Paid</th><th></th></tr></thead><tbody>
+        ${byPlace(items).map(([k, list]) => `<tr class="grp"><td colspan="4">${esc(placeLabel(k))}</td></tr>` + list.map(x => `<tr><td><b>${esc(x.name)}</b>${x.note ? `<small>${esc(x.note)}</small>` : ""}</td>
+          <td class="r">${fmt(x.qty || 1)}</td><td class="r">${x.price ? fmt(x.price) + (x.qty > 1 ? "<small>each</small>" : "") : "—"}</td>
+          <td class="r" style="width:1%;white-space:nowrap"><button class="mk-x mk-up" data-sed="${esc(x.sid)}">EDIT</button> <button class="mk-x" data-srm="${esc(x.sid)}" aria-label="Remove">×</button></td></tr>`).join("")).join("")}
+        </tbody></table>` : `<div class="mk-empty">No items in storage.<br>Add armour, weapons and gadgets you've left at a station so you know where they are.</div>`}</div>`,
+        {grow: true, head: `<span class="cap">${items.length ? `${items.length} ITEM${items.length === 1 ? "" : "S"}${iPaid ? " · " + short(iPaid) + " PAID" : ""}` : ""}</span><button class="mk-btn go" id="mkStAddI" style="height:34px;font-size:12px">+ Add item</button>`})}
+    </div>`;
+    const again = () => paintTrade();
+    body.querySelector("#mkStAddC").addEventListener("click", () => { buzz(6); openStore({mode: "add", kind: "cargo"}, again); });
+    body.querySelector("#mkStAddI").addEventListener("click", () => { buzz(6); openStore({mode: "add", kind: "item"}, again); });
+    body.querySelectorAll("[data-sed]").forEach(b => b.addEventListener("click", () => { const lot = storage().find(x => x.sid === b.dataset.sed); if (lot){ buzz(6); openStore({mode: "edit", kind: lot.kind, lot}, again); } }));
+    body.querySelectorAll("[data-load]").forEach(b => b.addEventListener("click", () => { const lot = storage().find(x => x.sid === b.dataset.load); if (lot){ buzz(6); openStore({mode: "load", kind: "cargo", lot}, again); } }));
+    body.querySelectorAll("[data-srm]").forEach(b => b.addEventListener("click", () => sureTap(b, "Remove?", () => {
+      LEDGER.storage = storage().filter(x => x.sid !== b.dataset.srm); saveLedger(); buzz(10); again(); })));
+  }
+  let STO = null;
+  function openStore(o, after){
+    if (!TD){ toast("Prices are still loading"); return; }
+    STO = {...o, after};
+    const run = activeRun(), aboard = run ? runStats(run).cargo : {};
+    if (o.mode === "leave" && !Object.keys(aboard).length){ toast("Nothing aboard to leave"); return; }
+    STO.kind = o.kind || "cargo";
+    // commodity list: what's aboard when leaving cargo, else everything
+    const coms = TD.commodities.slice().sort((a, b) => a.name.localeCompare(b.name));
+    const list = o.mode === "leave" ? coms.filter(c => aboard[c.name]) : coms;
+    $("#mkStoCom").innerHTML = list.map(c => `<option value="${c.id}" data-l="${esc(c.name)}" data-g="${o.mode === "leave" ? "Aboard" : esc(c.kind || "Other")}"${aboard[c.name] ? ` data-sub="${fmt(aboard[c.name])} SCU aboard"` : ""}>${esc(c.name)}</option>`).join("");
+    const PL = placeIndex(true);
+    $("#mkStoWhere").innerHTML = Object.entries(PL).sort((a, b) => (a[1].sys + placeName(a[1])).localeCompare(b[1].sys + placeName(b[1])))
+      .map(([k, t]) => `<option value="${esc(k)}" data-l="${esc(placeName(t))}" data-g="${esc(t.sys)}">${esc(placeName(t))}</option>`).join("");
+    const lot = o.lot;
+    if (lot){
+      if (lot.cid) $("#mkStoCom").value = String(lot.cid);
+      $("#mkStoWhere").value = lot.where || ""; $("#mkStoItem").value = lot.name || "";
+      $("#mkStoQty").value = o.mode === "load" ? +lot.scu.toFixed(2) : (lot.kind === "item" ? lot.qty || 1 : +lot.scu.toFixed(2));
+      $("#mkStoPrice").value = lot.price ? +(+lot.price).toFixed(2) : ""; $("#mkStoNote").value = lot.note || "";
+    } else {
+      $("#mkStoItem").value = ""; $("#mkStoNote").value = ""; $("#mkStoPrice").value = ""; $("#mkStoQty").value = "";
+      if (o.mode === "leave"){ stoPickAboard(); }
+      else { const last = run && (run.trades || []).filter(t => t.tid && TM[t.tid]).slice(-1)[0]; if (last) $("#mkStoWhere").value = placeKey(TM[last.tid]); }
+    }
+    $("#mkStoTitle").textContent = o.mode === "leave" ? "Leave cargo at a station" : o.mode === "load" ? `Load ${lot.name}` : o.mode === "edit" ? "Change storage" : STO.kind === "item" ? "Add an item in storage" : "Add cargo in storage";
+    $("#mkStoOk").textContent = o.mode === "load" ? "Load it" : o.mode === "leave" ? "Leave it" : "Save";
+    stoPaint(); $("#mkSto").classList.add("show");
+    if (!lot){   // the game log knows which station you're at: put the cargo or item there
+      const mine = STO;
+      getJSON("/api/market/whereami").then(w => {
+        if (STO !== mine || !w || !w.tid || !TM[w.tid] || Date.now() / 1000 - (w.ts || 0) > 3 * 3600) return;
+        const k = placeKey(TM[w.tid]); if (![...$("#mkStoWhere").options].some(o => o.value === k)) return;
+        $("#mkStoWhere").value = k; STO.here = placeName(TM[w.tid]); stoPaint();
+      }).catch(() => {});
+    }
+  }
+  function stoPickAboard(){   // leaving cargo: default to all of it, at what you paid, where you bought it
+    const run = activeRun(); if (!run) return;
+    const cid = +$("#mkStoCom").value, c = CM[cid]; if (!c) return;
+    const buys = (run.trades || []).filter(t => (t.kind === "buy" || t.kind === "load") && t.cid === cid);
+    const scu = buys.reduce((n, t) => n + (+t.scu || 0), 0), paid = buys.reduce((n, t) => n + (+t.scu || 0) * (+t.price || 0), 0);
+    $("#mkStoQty").value = +(runStats(run).cargo[c.name] || 0).toFixed(2);
+    STO.exact = scu ? paid / scu : 0;   // what you paid on average, exactly (the box shows it rounded)
+    $("#mkStoPrice").value = scu ? +(paid / scu).toFixed(2) : "";
+    const last = buys.slice(-1)[0]; if (last && TM[last.tid]) $("#mkStoWhere").value = placeKey(TM[last.tid]);
+    else if (last && last.where) $("#mkStoWhere").value = last.where;
+  }
+  function stoPaint(){
+    const o = STO, item = o.kind === "item", load = o.mode === "load";
+    document.querySelectorAll("#mkStoKind button").forEach(b => b.classList.toggle("on", b.dataset.k === o.kind));
+    const show = (q, on) => { $(q).style.display = on ? "" : "none"; };
+    show("#mkStoKind", o.mode === "add");
+    show("#mkStoComL", !item && !load); show("#mkStoItemL", item && !load); show("#mkStoWhereL", !load);
+    show("#mkStoPriceL", !load); show("#mkStoNoteL", !load);
+    $("#mkStoQtyCap").textContent = item ? "How many" : load ? "SCU to load" : "SCU";
+    $("#mkStoPriceCap").textContent = item ? "Paid each" : "Paid per SCU";
+    $("#mkStoNote").placeholder = item ? "e.g. in the hangar locker" : "e.g. 2 × 16 SCU boxes";
+    syncPickBtn($("#mkStoComBtn"), $("#mkStoCom"), "Choose a commodity"); syncPickBtn($("#mkStoWhereBtn"), $("#mkStoWhere"), "Choose where");
+    const h = $("#mkStoHint");
+    h.textContent = (o.here && !load ? `You're at ${o.here} (from your game log). ` : "") + o.mode === "leave" ? "It comes off this run with what you paid for it, so your profit isn't hit. Load it again later from Trade → Storage."
+      : load ? `${fmt(o.lot.scu)} SCU at ${placeLabel(o.lot.where)}, paid ${fmt(o.lot.price)}/SCU. It goes onto your current run${activeRun() ? "" : " (a new run starts)"} at that price.`
+      : item ? "Anything you've left in a station's storage: armour, weapons, gadgets, components." : "Cargo sitting in a station's storage, and what you paid for it.";
+  }
+  $("#mkStoKind").addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (b && STO){ STO.kind = b.dataset.k; buzz(6); stoPaint(); } });
+  $("#mkStoComBtn").addEventListener("click", () => pickFrom($("#mkStoCom"), "Commodity", () => { if (STO && STO.mode === "leave") stoPickAboard(); stoPaint(); }));
+  $("#mkStoWhereBtn").addEventListener("click", () => pickFrom($("#mkStoWhere"), "Where it is", () => stoPaint()));
+  $("#mkStoCancel").addEventListener("click", () => { $("#mkSto").classList.remove("show"); STO = null; });
+  $("#mkStoOk").addEventListener("click", () => {
+    const o = STO; if (!o) return;
+    const typed = +$("#mkStoPrice").value || 0, price = o.exact && Math.abs(typed - o.exact) < 0.01 ? o.exact : typed, qty = +$("#mkStoQty").value || 0, where = $("#mkStoWhere").value, note = $("#mkStoNote").value.trim();
+    const c = CM[+$("#mkStoCom").value];
+    if (o.mode === "load"){
+      const lot = o.lot, n = Math.min(qty, lot.scu); if (!(n > 0)){ toast("How many SCU?"); return; }
+      if (!activeRun()) startRun();
+      const run = activeRun();
+      run.trades.push({id: uid(), ts: Date.now(), kind: "load", cid: lot.cid, name: lot.name, scu: n, price: lot.price, terminalName: placeLabel(lot.where), where: lot.where, sid: lot.sid});
+      lot.scu -= n; if (lot.scu <= 0.001) LEDGER.storage = storage().filter(x => x !== lot);
+      toast(`${fmt(n)} SCU ${lot.name} loaded onto your run`, true);
+    } else if (o.kind === "item"){
+      const name = $("#mkStoItem").value.trim(); if (!name){ toast("What's the item?"); return; }
+      if (!where){ toast("Where is it?"); return; }
+      const lot = o.lot || {sid: uid(), kind: "item", ts: Date.now()};
+      Object.assign(lot, {name, where, qty: Math.max(1, Math.round(qty) || 1), price, note});
+      if (!o.lot) storage().push(lot);
+      toast(o.lot ? "Saved" : `${name} added to storage`, true);
+    } else {
+      if (!c){ toast("Choose the commodity"); return; } if (!where){ toast("Where is it?"); return; } if (!(qty > 0)){ toast("How many SCU?"); return; }
+      if (o.mode === "leave"){
+        const run = activeRun(), aboard = runStats(run).cargo[c.name] || 0, n = Math.min(qty, aboard);
+        const lot = addLot({sid: uid(), kind: "cargo", cid: c.id, name: c.name, scu: n, price, where, note, ts: Date.now()});
+        run.trades.push({id: uid(), ts: Date.now(), kind: "store", cid: c.id, name: c.name, scu: n, price, terminalName: placeLabel(where), where, sid: lot.sid});
+        toast(`${fmt(n)} SCU ${c.name} left at ${placeLabel(where)}`, true);
+      } else if (o.lot){ Object.assign(o.lot, {cid: c.id, name: c.name, scu: qty, price, where, note}); toast("Saved", true); }
+      else { addLot({sid: uid(), kind: "cargo", cid: c.id, name: c.name, scu: qty, price, where, note, ts: Date.now()}); toast(`${fmt(qty)} SCU ${c.name} added to storage`, true); }
+    }
+    saveLedger(); buzz(12); $("#mkSto").classList.remove("show"); const a = o.after; STO = null; if (a) a();
+  });
 
   // ----- Round trips: a cargo out, then a different cargo back to where you started -----
   const fill = (leg, money) => { let u = leg.cap; if (money > 0) u = Math.min(u, Math.floor(money / leg.b[2])); return Math.max(0, u); };
@@ -2888,7 +3118,7 @@ tr.concept td:first-child small{color:var(--amber)}
     (run && run.trades || []).forEach(t => {
       if (t.kind === "cost") return;
       const c = by[t.name] = by[t.name] || {name: t.name, cid: t.cid, scu: 0, boxes: {}, exact: true};
-      const sign = t.kind === "buy" ? 1 : -1;
+      const sign = t.kind === "buy" || t.kind === "load" ? 1 : -1;
       c.scu += sign * (+t.scu || 0);
       if (t.boxes && t.boxes.length) t.boxes.forEach(([s, n]) => { c.boxes[s] = (c.boxes[s] || 0) + sign * n; });
       else c.exact = false;
@@ -3149,9 +3379,12 @@ tr.concept td:first-child small{color:var(--amber)}
     return true;
   }
   // where a game shop really is, learned when you correct a trade from the log
-  const learned = t => { const id = (SET().logPlaces || {})[t.shop]; return id && TM[id] ? {id, name: TM[id].name, place: TM[id].place, score: 999} : null; };
+  // keyed by the station the game says you were at AND the shop: the same shop name (e.g. SCShop_Admin_lt_base_g) is used at many rest stops
+  const shopKey = t => t.shop ? (t.location || "?") + "|" + t.shop : "";
+  const learned = t => { const id = (SET().logPlaces || {})[shopKey(t)]; return id && TM[id] ? {id, name: TM[id].name, place: TM[id].place, score: 999} : null; };
   const logTerm = t => t.kind === "cost" ? null : (learned(t) || (t.terminals && t.terminals[0]) || null);
-  function learnPlace(shop, tid){ if (!shop || !tid) return; const s = SET(); s.logPlaces = s.logPlaces || {}; s.logPlaces[shop] = tid; }
+  function learnPlace(key, tid){ if (!key || !tid || !key.includes("|")) return; const s = SET(); s.logPlaces = s.logPlaces || {}; s.logPlaces[key] = tid;
+    Object.keys(s.logPlaces).forEach(k => { if (!k.includes("|")) delete s.logPlaces[k]; }); }   // drop old shop-only guesses
   const newLogTrades = () => (GLOG && GLOG.trades || []).filter(t => !t.imported && !importedKeys().includes(t.key));
   function addFromLog(t, quiet){
     if (t.kind === "cost"){
@@ -3167,7 +3400,7 @@ tr.concept td:first-child small{color:var(--amber)}
     if (!activeRun()) startRun();
     const run = activeRun();
     const tr = {id: uid(), ts: t.ts, kind: t.kind, cid: t.commodity, name: (CM[t.commodity] || {}).name || t.name, tid: term.id,
-      terminalName: termLabel(TM[term.id]) || term.name, scu: t.scu, price: t.price, fromLog: t.key, logShop: t.shop, boxes: t.boxes || []};
+      terminalName: termLabel(TM[term.id]) || term.name, scu: t.scu, price: t.price, fromLog: t.key, logShop: shopKey(t), boxes: t.boxes || []};
     run.trades.push(tr); run.trades.sort((a, b) => a.ts - b.ts);
     if (t.ts < run.started) run.started = t.ts;
     markImported(t.key);
@@ -3182,7 +3415,7 @@ tr.concept td:first-child small{color:var(--amber)}
       return;
     }
     const term = logTerm(t);
-    openLog(t.kind, {cid: t.commodity || undefined, tid: term ? term.id : undefined, scu: t.scu, price: t.price, ts: t.ts, logKey: t.key, logShop: t.shop, boxes: t.boxes, keepPrice: true});
+    openLog(t.kind, {cid: t.commodity || undefined, tid: term ? term.id : undefined, scu: t.scu, price: t.price, ts: t.ts, logKey: t.key, logShop: shopKey(t), boxes: t.boxes, keepPrice: true});
     if (term) $("#mkLogWhere").value = String(term.id);
     $("#mkLogPrice").value = t.price; $("#mkLogScu").value = t.scu;
     syncPickBtn($("#mkLogWhereBtn"), $("#mkLogWhere"), "Choose where"); logTotal();
@@ -3246,23 +3479,37 @@ tr.concept td:first-child small{color:var(--amber)}
           ${st.costs ? `<div class="mk-tile"><span class="cap">Costs (fuel etc.)</span><b class="mk-neg">${short(st.costs)}</b></div>` : ""}
           <div class="mk-tile"><span class="cap">Earned</span><b>${short(st.earned)}</b></div>
           <div class="mk-tile"><span class="cap">Time</span><b>${dur(st.ms)}</b></div>
-          <div class="mk-tile"><span class="cap">Per hour</span><b>${st.ms >= 600000 ? short(st.perHour) : "—"}</b></div>
+          ${cargo.length && sellEst(run) ? `<div class="mk-tile"><span class="cap">If you sell it all</span><b class="${st.profit + sellEst(run).value >= 0 ? "mk-pos" : "mk-neg"}">${signed(Math.round(st.profit + sellEst(run).value))}</b><small class="mk-dim">${esc(sellEst(run).where)}</small></div>`
+            : `<div class="mk-tile"><span class="cap">Per hour</span><b>${st.ms >= 600000 && st.earned ? short(st.perHour) : "—"}</b></div>`}
+          ${walletNow() ? `<div class="mk-tile" style="grid-column:1/-1"><span class="cap">Wallet · estimate</span><b>${fmt(walletNow().est)}</b></div>` : ""}
         </div>
-        <span class="cap">${run.ship ? esc(run.ship) + " · " : ""}first trade ${new Date((run.trades || []).reduce((m, t) => Math.min(m, t.ts || m), run.started)).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})} · time counts from your first trade</span>
+        <label class="mk-runship"><span class="cap">Ship</span><select id="mkRunShip">${[...new Set([run.ship || "", ...hangar().filter(h => !expired(h)).map(h => h.name)])].sort((a, b) => !a - !b || a.localeCompare(b)).map(n => `<option value="${esc(n)}"${n === (run.ship || "") ? " selected" : ""}>${esc(n || "Not set")}</option>`).join("")}</select></label>
+        <span class="cap">first trade ${new Date((run.trades || []).filter(t => t.kind !== "store" && t.kind !== "load").reduce((m, t) => Math.min(m, t.ts || m), Infinity) === Infinity ? run.started : (run.trades || []).filter(t => t.kind !== "store" && t.kind !== "load").reduce((m, t) => Math.min(m, t.ts || m), Infinity)).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})} · time counts from your first trade</span>
         <div><span class="cap">Cargo aboard</span><div class="mk-cargo" style="margin-top:6px">${cargo.length ? cargo.map(([n, q]) => `<span>${fmt(q)} SCU ${esc(n)}</span>`).join("") : '<span style="color:var(--dim);border-color:#22384e">Empty</span>'}</div></div>
-        ${cargo.length ? `<p class="mk-note">Profit counts what you've paid for this cargo. It comes back when you sell.</p>` : ""}`)}
+        ${loadCheck(run)}
+        ${cargo.length ? `<p class="mk-note">Profit counts what you've paid for this cargo. It comes back when you sell.</p>
+          <div class="mk-actions" style="margin-top:-4px"><button class="mk-btn" id="mkLeave" style="height:40px;font-size:13px">Leave some at a station</button></div>` : ""}`)}
         <div class="mk-actions"><button class="mk-btn buy" id="mkBuy">+ Buy</button><button class="mk-btn sell" id="mkSell">+ Sell</button><button class="mk-btn" id="mkCost">+ Cost</button></div>
-        ${UEXS.ready && run.trades.some(t => t.kind !== "cost" && !t.uexId) ? `<div class="mk-actions"><button class="mk-btn go" id="mkUexRun">Send ${run.trades.filter(t => t.kind !== "cost" && !t.uexId).length} to UEX</button></div>` : ""}
+        ${UEXS.ready && run.trades.some(t => isTrade(t) && !t.uexId) ? `<div class="mk-actions"><button class="mk-btn go" id="mkUexRun">Send ${run.trades.filter(t => isTrade(t) && !t.uexId).length} to UEX</button></div>` : ""}
         <div class="mk-actions"><button class="mk-btn warn" id="mkEnd">End run</button></div>
       </div>
       ${panel("02", "Trades", `${run.next ? `<div class="mk-stop" style="border-color:rgba(61,214,255,.45)"><h4 style="font-size:16px">Round trip: the way back<span class="sp"></span><button class="mk-x" id="mkNextX" aria-label="Forget the return leg">×</button></h4>
           <p class="mk-note">When you've sold, buy <b>${fmt(run.next.scu)} SCU ${esc(run.next.name)}</b> at <b>${esc(run.next.at)}</b> (${fmt(run.next.price)}/SCU) and sell it at <b>${esc(run.next.target.name)}</b> (${fmt(run.next.target.price)}/SCU).</p>
-          <div class="mk-actions"><button class="mk-btn buy" id="mkNextBuy">Buy the return cargo</button></div></div>` : ""}${logPanel()}<div class="mk-well" style="flex:1">${trades.length ? `<table class="mk-table"><thead><tr><th>Type</th><th>What</th><th class="r">SCU</th><th class="r">Each</th><th class="r">Total</th><th></th></tr></thead><tbody>
+          <div class="mk-actions"><button class="mk-btn buy" id="mkNextBuy">Buy the return cargo</button></div></div>` : ""}${whereToSell(run)}${logPanel()}<div class="mk-well" style="flex:1">${trades.length ? `<table class="mk-table"><thead><tr><th>Type</th><th>What</th><th class="r">SCU</th><th class="r">Each</th><th class="r">Total</th><th></th></tr></thead><tbody>
         ${trades.map(t => tradeRow(t)).join("")}</tbody></table>` : `<div class="mk-empty">Nothing logged yet. Tap <b>+ Buy</b> when you buy cargo.</div>`}</div>`, {grow: true})}
     </div>`;
     body.querySelector("#mkBuy").addEventListener("click", () => openLog("buy"));
     body.querySelector("#mkSell").addEventListener("click", () => openLog("sell"));
     body.querySelector("#mkCost").addEventListener("click", () => openLog("cost"));
+    body.querySelectorAll("[data-ld]").forEach(b => b.addEventListener("click", () => {
+      const [k, d] = b.dataset.ld.split("@"), max = +b.dataset.max; run.loaded = run.loaded || {};
+      const cur = Math.min(max, run.loaded[k] || 0);
+      run.loaded[k] = d === "all" ? (cur === max ? 0 : max) : Math.max(0, Math.min(max, cur + +d));
+      buzz(6); saveLedger(); paintTrade(); }));
+    const rs = body.querySelector("#mkRunShip"); if (rs) rs.addEventListener("change", () => { run.ship = rs.value;
+      const v = TD.ships.find(x => x.name === rs.value), h = v && hangarFor(v.id); if (h) run.scu = shipScu(h);
+      saveLedger(); buzz(8); toast(`This run's ship: ${rs.value || "not set"}`, true); paintTrade(); });
+    const lv = body.querySelector("#mkLeave"); if (lv) lv.addEventListener("click", () => { buzz(6); openStore({mode: "leave"}, paintTrade); });
     const nb = body.querySelector("#mkNextBuy"); if (nb) nb.addEventListener("click", () => { const n = run.next; buzz(10);
       const row = TD.rows.find(r => r[0] === n.cid && r[1] === n.tid);   // today's price if UEX has a newer one
       openLog("buy", {cid: n.cid, tid: n.tid, scu: n.scu, price: row && row[2] ? row[2] : n.price, target: n.target}); });
@@ -3276,11 +3523,81 @@ tr.concept td:first-child small{color:var(--amber)}
     wireTradeDeletes(body, run);
     wireLogPanel(body, () => paintTrade());
   }
+  // box sizes from the game log, e.g. [[16, 14], [8, 2]] -> "14 × 16 · 2 × 8 SCU boxes"
+  const boxText = b => b && b.length ? b.filter(x => x[1] > 0).sort((p, q) => q[0] - p[0]).map(([s, n]) => `${n} × ${s}`).join(" · ") + " SCU boxes" : "";
+  // Loading check: tick off each box as it goes into the ship, so none get left on the lift
+  // what the cargo aboard would fetch: at the sell terminal you picked (Buy this on a route), else the best UEX price in that system
+  // ----- Where to sell what's aboard: only places UEX says buy it, with how full they are -----
+  // UEX's sell-side status is the terminal's own stock: out of stock = wants it, max inventory = won't buy
+  const DEMAND = {1: ["empty · wants it", "mk-pos"], 2: ["very low stock · wants it", "mk-pos"], 3: ["low stock", ""], 4: ["medium stock", ""],
+    5: ["high stock", "mk-old"], 6: ["nearly full", "mk-old"], 7: ["full · won't buy", "mk-stale"]};
+  function whereToSell(run){
+    if (!TD) return "";
+    const aboard = runCargoBoxes(run); if (!aboard.length) return "";
+    const lastBuy = (run.trades || []).filter(t => t.kind === "buy" && TM[t.tid]).slice(-1)[0], sys = lastBuy ? TM[lastBuy.tid].sys : null;
+    const blocks = aboard.map(c => {
+      const ins = (run.trades || []).filter(t => (t.kind === "buy" || t.kind === "load") && t.cid === c.cid);
+      const q = ins.reduce((n, t) => n + (+t.scu || 0), 0), paid = q ? ins.reduce((n, t) => n + (+t.scu || 0) * (+t.price || 0), 0) / q : 0;
+      const rows = TD.rows.filter(r => r[0] === c.cid && r[3] > 0 && TM[r[1]] && (!sys || TM[r[1]].sys === sys) && r[8] !== 7)
+        .sort((a, b) => b[3] - a[3]).slice(0, 6);
+      const full = TD.rows.filter(r => r[0] === c.cid && r[3] > 0 && TM[r[1]] && (!sys || TM[r[1]].sys === sys) && r[8] === 7).map(r => TM[r[1]].name);
+      return `<div style="margin-top:6px"><b>${esc(c.name)}</b> <span class="mk-dim">${fmt(c.scu)} SCU · paid ${fmt(Math.round(paid))}/SCU</span>
+        ${rows.length ? `<table class="mk-table" style="margin-top:4px"><tbody>${rows.map(r => { const t = TM[r[1]], d = DEMAND[r[8]], gain = (r[3] - paid) * c.scu;
+          const roomy = r[5] && r[5] < c.scu;
+          return `<tr><td><b>${esc(t.name)}</b><small>${esc(placeName(t))}</small></td>
+            <td class="r nw">${fmt(r[3])}<small class="${gain >= 0 ? "mk-pos" : "mk-neg"}">${signed(Math.round(gain))}</small></td>
+            <td><small class="${roomy ? "mk-old" : ""}">${r[5] ? `wants ${fmt(r[5])} SCU${roomy ? " (less than you have)" : ""}` : "amount it wants unknown"}</small>${d ? `<small class="${d[1]}">${d[0]}</small>` : ""}</td>
+            <td class="r nw"><small class="${ageCls(r[9])}">${ago(r[9])} ago</small></td></tr>`; }).join("")}</tbody></table>`
+          : `<p class="mk-note" style="margin:4px 0 0;color:#ff9a9a">UEX doesn't list anywhere${sys ? " in " + esc(sys) : ""} that buys it right now.</p>`}
+        ${full.length ? `<p class="mk-note" style="margin:4px 0 0">Full, won't buy: ${full.map(esc).join(", ")}</p>` : ""}</div>`; }).join("");
+    return `<div class="mk-stop"><h4 style="font-size:16px">Where to sell <small>WHAT'S ABOARD · UEX PRICES${sys ? " · " + esc(sys).toUpperCase() : ""}</small></h4>${blocks}
+      <p class="mk-note" style="margin:6px 0 0">Anywhere not listed doesn't buy it, as far as UEX knows. Old prices (amber or red) are worth checking before you fly.</p></div>`;
+  }
+  function sellEst(run){
+    if (!TD) return null;
+    const aboard = runCargoBoxes(run); if (!aboard.length) return null;
+    const lastBuy = (run.trades || []).filter(t => t.kind === "buy" && TM[t.tid]).slice(-1)[0], sys = lastBuy ? TM[lastBuy.tid].sys : null;
+    let value = 0, where = new Set();
+    for (const c of aboard){
+      const tg = run.target && run.target.cid === c.cid ? run.target : null;
+      let price = tg ? tg.price : 0, at = tg ? tg.name : "";
+      if (!price){ TD.rows.forEach(r => { const t = TM[r[1]]; if (r[0] === c.cid && r[3] > price && r[8] !== 7 && t && (!sys || t.sys === sys)){ price = r[3]; at = t.name; } }); }
+      if (!price) return null;
+      value += c.scu * price; where.add(at);
+    }
+    return {value, where: [...where].length === 1 ? "at " + [...where][0] : "at the best prices"};
+  }
+  function loadCheck(run){
+    const list = runCargoBoxes(run).filter(c => c.boxes && c.boxes.length);
+    if (!list.length) return "";
+    const L = run.loaded || {};
+    let have = 0, want = 0;
+    const rows = list.map(c => {
+      const by = {}; c.boxes.forEach(s => by[s] = (by[s] || 0) + 1);
+      return `<div class="mk-ldc"><b>${esc(c.name)}</b>${Object.entries(by).sort((a, b) => b[0] - a[0]).map(([size, n]) => {
+        const k = c.cid + ":" + size, got = Math.min(n, L[k] || 0); have += got * size; want += n * size;
+        return `<div class="mk-ldr${got === n ? " ok" : ""}"><span class="sz">${size} SCU</span>
+          <button class="mk-x" data-ld="${k}@-1" data-max="${n}" aria-label="One fewer ${size} SCU box">−</button>
+          <span class="ct"><b>${got}</b> / ${n}</span>
+          <button class="mk-x" data-ld="${k}@1" data-max="${n}" aria-label="One more ${size} SCU box loaded">+</button>
+          <button class="mk-x mk-up" data-ld="${k}@all" data-max="${n}">${got === n ? "✓" : "ALL"}</button></div>`; }).join("")}</div>`; }).join("");
+    const done = have >= want;
+    return `<div class="mk-ldbox${done ? " ok" : ""}"><span class="cap">Loading check · ${done ? "all loaded ✓" : `${fmt(have)} / ${fmt(want)} SCU ticked`}</span>${rows}
+      <p class="mk-note" style="margin:4px 0 0">Tap + as each box goes in. Box sizes come from your game log.</p></div>`;
+  }
   function tradeRow(t){
+    if (t.kind === "store" || t.kind === "load"){
+      const time = new Date(t.ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+      return `<tr><td><span class="mk-kind ${t.kind}">${t.kind.toUpperCase()}</span><small>${time}</small></td>
+      <td><b>${esc(t.name)}</b><small>${t.kind === "store" ? "left at" : "picked up from"} ${esc(t.terminalName || "")}</small></td>
+      <td class="r">${fmt(t.scu)}</td><td class="r">${fmt(t.price)}</td>
+      <td class="r"><span class="mk-moved">${t.kind === "store" ? "→ storage" : "← storage"}</span></td>
+      <td class="r" style="width:1%;white-space:nowrap"><button class="mk-x" data-del="${esc(t.id)}" aria-label="Undo this">×</button></td></tr>`;
+    }
     const total = t.kind === "cost" ? -(+t.amount || 0) : (t.kind === "sell" ? 1 : -1) * (+t.scu || 0) * (+t.price || 0);
     const time = new Date(t.ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
     return `<tr><td><span class="mk-kind ${t.kind}">${t.kind.toUpperCase()}</span><small>${time}</small></td>
-      <td><b>${esc(t.kind === "cost" ? (t.note || "Cost") : t.name)}</b><small>${esc(t.terminalName || "")}${t.fromLog ? " · from game log" : ""}</small></td>
+      <td><b>${esc(t.kind === "cost" ? (t.note || "Cost") : t.name)}</b><small>${esc(t.terminalName || "")}${t.fromLog ? " · from game log" : ""}</small>${t.kind === "buy" && t.boxes && t.boxes.length ? `<small class="mk-dim">${boxText(t.boxes)}</small>` : ""}</td>
       <td class="r">${t.kind === "cost" ? "" : fmt(t.scu)}</td><td class="r">${t.kind === "cost" ? "" : fmt(t.price)}</td>
       <td class="r ${total >= 0 ? "mk-pos" : "mk-neg"}">${signed(total)}</td>
       <td class="r" style="width:1%;white-space:nowrap">${t.kind === "cost" ? "" : t.uexId ? `<span class="mk-sent" title="In your UEX Trade Log">UEX ✓</span> `
@@ -3289,6 +3606,7 @@ tr.concept td:first-child small{color:var(--amber)}
   function wireTradeDeletes(body, run, after){
     body.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); sureTap(b, "Delete?", () => {
       const t = run.trades.find(x => x.id === b.dataset.del);
+      if (t && (t.kind === "store" || t.kind === "load")) undoMove(t);
       run.trades = run.trades.filter(x => x.id !== b.dataset.del); saveLedger(); buzz(10); (after || paintTrade)();
       if (t && t.uexId) api("market/uex/remove", {id: t.uexId}).then(() => toast("Deleted here and on UEX", true))
         .catch(err => toast("Deleted here, but not on UEX: " + err.message));
@@ -3306,13 +3624,13 @@ tr.concept td:first-child small{color:var(--amber)}
   }
   // one buy or sell -> your UEX Trade Log (the PC does the sending, with your keys)
   async function sendToUex(t){
-    if (t.uexId || t.kind === "cost") return true;
+    if (t.uexId || !isTrade(t)) return true;
     try { const r = await api("market/uex/send", {trade: t}); t.uexId = r.id; delete t.uexErr; }
     catch (e){ t.uexErr = e.message; }
     saveLedger(); return !!t.uexId;
   }
   async function sendRunToUex(run, btn){
-    const todo = (run.trades || []).filter(t => t.kind !== "cost" && !t.uexId);
+    const todo = (run.trades || []).filter(t => isTrade(t) && !t.uexId);
     if (btn){ btn.disabled = true; btn.textContent = "Sending…"; }
     let ok = 0;
     for (const t of todo){ if (await sendToUex(t)) ok++; else break; }   // stop at the first problem
@@ -3344,6 +3662,31 @@ tr.concept td:first-child small{color:var(--amber)}
 
   // ----- Ledger -----
   let openRunId = null;
+  // ----- Wallet: the game doesn't log your balance, so you type it now and then and Flightdeck adds what you've logged since -----
+  function walletNow(){
+    const w = LEDGER.wallet; if (!w || w.amount == null) return null;
+    let delta = 0, n = 0;
+    LEDGER.runs.forEach(r => (r.trades || []).forEach(t => { if (!(t.ts > w.at)) return;
+      if (t.kind === "cost"){ delta -= +t.amount || 0; n++; }
+      else if (isTrade(t)){ delta += (t.kind === "sell" ? 1 : -1) * (+t.scu || 0) * (+t.price || 0); n++; } }));
+    return {est: Math.round(w.amount + delta), delta: Math.round(delta), n, set: w.amount, at: w.at};
+  }
+  // Routes budget: what you typed, or your wallet estimate when WALLET is ticked (it keeps up as you trade)
+  const runBudget = () => { const s = SET(), W = s.useWallet ? walletNow() : null; return W ? Math.max(0, W.est) : (+s.budget || 0); };
+  function walletBar(){
+    const W = walletNow();
+    return `<div class="mk-wallet">
+      <div><span class="cap">Wallet${W ? " · estimate" : ""}</span><b style="display:block;font-family:var(--mono);font-size:30px">${W ? fmt(W.est) : "—"}<small style="font-size:14px;color:var(--dim)"> aUEC</small></b>
+        <small class="mk-dim">${W ? `you set ${fmt(W.set)} ${ago(W.at / 1000)} ago${W.n ? ` · ${signed(W.delta)} logged since` : " · nothing logged since"}` : "The game doesn't record your balance. Type what your mobiGlas shows and Flightdeck keeps it up to date from your trades and costs."}</small></div>
+      <input class="mk-input" id="mkWalletIn" type="number" inputmode="numeric" min="0" placeholder="Balance in game" style="width:200px">
+      <button class="mk-btn go" id="mkWalletSet" style="height:44px">${W ? "Update" : "Set"}</button></div>`;
+  }
+  function wireWallet(body, again){
+    const b = body.querySelector("#mkWalletSet"), i = body.querySelector("#mkWalletIn"); if (!b) return;
+    const go = () => { const v = i.value.trim(); if (v === "" || isNaN(+v)){ toast("Type your balance from the game"); return; }
+      LEDGER.wallet = {amount: Math.round(+v), at: Date.now()}; saveLedger(); buzz(10); toast("Wallet set", true); again(); };
+    b.addEventListener("click", go); i.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+  }
   function paintLedger(body){
     const done = LEDGER.runs.filter(r => r.ended);
     const stats = done.map(r => ({r, ...runStats(r)}));
@@ -3353,11 +3696,12 @@ tr.concept td:first-child small{color:var(--amber)}
     const byCom = {};
     stats.forEach(x => (x.r.trades || []).forEach(t => {
       if (t.kind === "cost") return;
-      byCom[t.name] = (byCom[t.name] || 0) + (t.kind === "sell" ? 1 : -1) * t.scu * t.price;
+      byCom[t.name] = (byCom[t.name] || 0) + (t.kind === "sell" || t.kind === "store" ? 1 : -1) * t.scu * t.price;
     }));
     const best = Object.entries(byCom).sort((a, b) => b[1] - a[1])[0];
     body.innerHTML = `<div class="mk" style="grid-template-columns:minmax(0,1fr)">
       <div class="col" style="min-height:0">
+      ${walletBar()}
       <div class="mk-tiles">
         <div class="mk-tile big"><span class="cap">Total profit</span><b class="${sum(stats, "profit") >= 0 ? "mk-pos" : "mk-neg"}">${signed(sum(stats, "profit"))}</b></div>
         <div class="mk-tile"><span class="cap">Last 7 days</span><b class="${sum(week, "profit") >= 0 ? "mk-pos" : "mk-neg"}">${short(sum(week, "profit"))}</b></div>
@@ -3367,16 +3711,17 @@ tr.concept td:first-child small{color:var(--amber)}
       </div>
       ${panel("01", "Your Runs", `<div class="mk-well" style="flex:1">${stats.length ? `<table class="mk-table"><thead><tr><th>When</th><th>Ship</th><th>Cargo</th><th class="r">Time</th><th class="r">Per hour</th><th class="r">Profit</th></tr></thead><tbody>
         ${stats.slice().reverse().map(x => {
-          const coms = [...new Set((x.r.trades || []).filter(t => t.kind !== "cost").map(t => t.name))].join(", ");
+          const coms = [...new Set((x.r.trades || []).filter(isTrade).map(t => t.name))].join(", ");
           const open = openRunId === x.r.id;
           return `<tr class="tap" data-run="${esc(x.r.id)}"><td>${new Date(x.r.started).toLocaleDateString([], {day: "numeric", month: "short"})}<small>${new Date(x.r.started).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"})}</small></td>
             <td>${esc(x.r.ship || "—")}</td><td>${esc(coms || "—")}<small>${(x.r.trades || []).length} trades ${open ? "▲" : "▼"}</small></td>
             <td class="r">${dur(x.ms)}</td><td class="r">${x.ms >= 600000 ? short(x.perHour) : "—"}</td><td class="r ${x.profit >= 0 ? "mk-pos" : "mk-neg"}">${signed(x.profit)}</td></tr>
             ${open ? `<tr><td colspan="6" style="background:#050a10;padding:6px 10px 12px"><table class="mk-table"><tbody>${(x.r.trades || []).slice().reverse().map(t => tradeRow(t)).join("")}</tbody></table>
-              <div class="mk-actions" style="margin-top:8px">${UEXS.ready && x.r.trades.some(t => t.kind !== "cost" && !t.uexId) ? `<button class="mk-btn go" data-uexrun="${esc(x.r.id)}">Send to UEX (${x.r.trades.filter(t => t.kind !== "cost" && !t.uexId).length})</button>` : ""}<button class="mk-btn" data-reopen="${esc(x.r.id)}">Carry on this run</button><button class="mk-btn warn" data-delrun="${esc(x.r.id)}">Delete run</button></div></td></tr>` : ""}`;
+              <div class="mk-actions" style="margin-top:8px">${UEXS.ready && x.r.trades.some(t => isTrade(t) && !t.uexId) ? `<button class="mk-btn go" data-uexrun="${esc(x.r.id)}">Send to UEX (${x.r.trades.filter(t => isTrade(t) && !t.uexId).length})</button>` : ""}<button class="mk-btn" data-reopen="${esc(x.r.id)}">Carry on this run</button><button class="mk-btn warn" data-delrun="${esc(x.r.id)}">Delete run</button></div></td></tr>` : ""}`;
         }).join("")}</tbody></table>` : `<div class="mk-empty">No finished runs yet. Start one on <b>Current run</b>.</div>`}</div>`,
         {grow: true, head: stats.length ? `<a class="mk-btn" style="height:34px;display:flex;align-items:center;text-decoration:none;font-size:12px" href="/api/market/ledger.csv" download>Export CSV</a>` : ""})}
       </div></div>`;
+    wireWallet(body, () => paintLedger(body));
     body.querySelectorAll("[data-run]").forEach(tr => tr.addEventListener("click", () => { openRunId = openRunId === tr.dataset.run ? null : tr.dataset.run; buzz(6); paintLedger(body); }));
     const openRun = LEDGER.runs.find(r => r.id === openRunId);
     if (openRun) wireTradeDeletes(body, openRun, () => paintLedger(body));
@@ -5098,6 +5443,7 @@ tr.concept td:first-child small{color:var(--amber)}
       const j = await r.json();
       setStatus(true, "Linked · " + Math.round(performance.now() - t0) + " ms");
       if (rev !== null && j.rev !== rev) reloadConfig();
+      if (j.ledger) syncLedger(j.ledger);
       // The panel's files were updated on the PC: reload (a home-screen app has no reload button)
       if (j.ui){
         if (uiVersion === null) uiVersion = j.ui;

@@ -63,6 +63,10 @@ UEX_ERRORS = {
 }
 
 
+class LedgerConflict(Exception):
+    pass
+
+
 class Market:
     def __init__(self, home):   # home = the mydata folder
         self.home = home
@@ -354,6 +358,15 @@ class Market:
             grids.append({"w": u(g.get("width")), "h": u(g.get("height")), "l": u(g.get("length")), "scu": g.get("scu") or 0,
                           "maxBox": g.get("max_scu_box") or 0, "max": [u(mx.get("x")), u(mx.get("y")), u(mx.get("z"))],
                           "external": bool(g.get("external"))})
+        # UEX lists which box sizes a ship really takes; where the Wiki says less (the Ironclad's grids come through
+        # as 1 SCU boxes only), trust UEX and let the grid's own size limit the boxes
+        uex_boxes = [int(x) for x in re.findall(r"\d+", str(v.get("container_sizes") or "")) if int(x) in (1, 2, 4, 8, 16, 24, 32)]
+        if uex_boxes:
+            top = max(uex_boxes)
+            for g in grids:
+                if top > (g["maxBox"] or 0):
+                    g["maxBox"] = top
+                    g["max"] = [g["w"], g["l"], g["h"]]
         grids.sort(key=lambda g: -g["scu"])
         return {"id": vehicle_id, "name": name, "scu": v.get("scu") or 0, "found": bool(d),
                 "capacity": (d or {}).get("cargo_capacity"), "grids": grids, "uexBoxes": v.get("container_sizes") or ""}
@@ -585,6 +598,32 @@ class Market:
             hits = [ln.rstrip()[:1200] for ln in f if rx.search(ln)]
         return {"found": True, "count": len(hits), "lines": hits[-limit:]}
 
+    def where_am_i(self, sc_path):
+        """The station you were last at, from the game's inventory requests (Location[...] in Game.log)."""
+        r = self.log_lines(sc_path, r"Location\[", 1)
+        if not r.get("lines"):
+            return {"found": False}
+        line = r["lines"][-1]
+        m, ts = re.search(r"Location\[([^\]]+)\]", line), self._ts.match(line)
+        code = m.group(1) if m else ""
+        out = {"found": bool(code), "code": code,
+               "ts": int(calendar.timegm(time.strptime(ts.group(1)[:19], "%Y-%m-%dT%H:%M:%S"))) if ts else 0}
+        try:
+            data = self.trade_data()
+        except Exception:
+            return out
+        want = self._place_for(code).lower()
+        terms = data["terminals"]
+        hit = [t for t in terms if want and want in (t["name"] + " " + t.get("place", "")).lower()]
+        if not hit:   # no table entry: best token overlap, e.g. a city's spaceport
+            lt = set(x for x in self._tokens(re.sub(r"([A-Za-z])(\d)", r"\1 \2", code)) if len(x) > 1)
+            scored = sorted(((len(lt & self._tokens(t["name"] + " " + t.get("place", ""))), t) for t in terms), key=lambda x: -x[0])
+            hit = [t for n, t in scored if lt and n >= max(1, len(lt) - 1)][:1]
+        if hit:
+            t = sorted(hit, key=lambda t: "admin" not in t["name"].lower())[0]
+            out.update({"tid": t["id"], "place": t.get("place", ""), "sys": t.get("sys", "")})
+        return out
+
     _ts = re.compile(r"^<(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?)Z>")
     _kv = re.compile(r"(\w+)\[([^\]]*)\]")
 
@@ -696,6 +735,22 @@ class Market:
             t.add("gateway")
         return t
 
+    # the game's names for stations (Location[...] in Game.log) -> the place name UEX uses
+    LOC_PLACE = {"RR_MIC_LEO": "Port Tressler", "RR_ARC_LEO": "Baijini Point", "RR_CRU_LEO": "Seraphim Station",
+                 "RR_HUR_LEO": "Everus Harbor", "RR_JP_StantonMagnus": "Nyx Gateway (Stanton)",
+                 "RR_JP_StantonNyx": "Nyx Gateway (Stanton)", "RR_JP_StantonPyro": "Pyro Gateway (Stanton)",
+                 "RR_JP_PyroStanton": "Stanton Gateway (Pyro)", "RR_JP_NyxStanton": "Stanton Gateway (Nyx)",
+                 "RR_JP_MagnusStanton": "Stanton Gateway (Nyx)", "RR_JP_PyroNyx": "Nyx Gateway (Pyro)",
+                 "RR_JP_PyroMagnus": "Nyx Gateway (Pyro)", "RR_JP_NyxPyro": "Pyro Gateway (Nyx)",
+                 "RR_JP_MagnusPyro": "Pyro Gateway (Nyx)"}
+
+    def _place_for(self, loc):
+        loc = loc or ""
+        if loc in self.LOC_PLACE:
+            return self.LOC_PLACE[loc]
+        m = re.fullmatch(r"RR_(ARC|CRU|HUR|MIC)_L(\d)", loc)
+        return f"{m.group(1)}-L{m.group(2)}" if m else ""
+
     def _match(self, t, name, data):
         """Which UEX commodity and terminal a logged trade was."""
         t["commodity"] = None
@@ -714,6 +769,8 @@ class Market:
         tm = {x["id"]: x for x in data["terminals"]}
         loc_t, shop_t = self._tokens(t["location"]), self._tokens(t["shop"])
         col = 2 if t["kind"] == "buy" else 3
+        want = self._place_for(t["location"]).lower()
+        at = lambda term: bool(want) and want in (term["name"] + " " + term.get("place", "")).lower()
         cands = []
         for r in data["rows"]:
             if com and r[0] != com["id"]:
@@ -722,7 +779,7 @@ class Market:
             if not term:
                 continue
             tt = self._tokens(term["name"] + " " + term.get("place", ""))
-            score = 0.0
+            score = 150.0 if at(term) else 0.0
             if loc_t and loc_t <= tt:
                 score += 100
             elif loc_t:
@@ -731,9 +788,13 @@ class Market:
                 score += 15 * len(shop_t & tt) / len(shop_t)
             if r[col] > 0 and t["price"] > 0:
                 score += max(0.0, 40 - 400 * abs(r[col] - t["price"]) / t["price"])
-            elif com:
+            elif com and not at(term):
                 continue          # this terminal doesn't trade it that way
             cands.append((score, term["id"], term["name"], term.get("place", ""), r[col]))
+        if want and not any(c[0] >= 150 for c in cands):   # the station you were at, even if UEX has no price there yet
+            for term in data["terminals"]:
+                if at(term):
+                    cands.append((150 + (10 if "admin" in term["name"].lower() else 0), term["id"], term["name"], term.get("place", ""), 0))
         cands.sort(key=lambda c: -c[0])
         best, seen = [], set()
         for c in cands:
@@ -748,6 +809,13 @@ class Market:
                 "prices": self.age(UEX + "commodities_prices_all/"), "items": self.age(UEX + "items_prices_all/")}
 
     # ------------------------------------------------------------------ your ledger
+    def ledger_rev(self):
+        """Changes whenever the ledger file is saved - lets each tablet/PC notice the other's changes."""
+        try:
+            return str(os.stat(self.ledger_path).st_mtime_ns)
+        except OSError:
+            return "0"
+
     def ledger(self):
         try:
             with open(self.ledger_path, encoding="utf-8") as f:
@@ -755,15 +823,20 @@ class Market:
         except Exception:
             d = {}
         return {"v": 1, "runs": d.get("runs", []), "starred": d.get("starred", []), "settings": d.get("settings", {}),
-                "hangar": d.get("hangar", [])}
+                "hangar": d.get("hangar", []), "storage": d.get("storage", []), "wallet": d.get("wallet"), "_rev": self.ledger_rev()}
 
     def save_ledger(self, d):
         if not isinstance(d, dict) or not isinstance(d.get("runs", []), list) or not isinstance(d.get("starred", []), list):
             raise ValueError("ledger must have runs and starred lists")
         out = {"v": 1, "runs": d.get("runs", [])[-2000:], "starred": [int(x) for x in d.get("starred", [])][:300],
                "settings": d.get("settings", {}) if isinstance(d.get("settings"), dict) else {},
-               "hangar": [h for h in d.get("hangar", []) if isinstance(h, dict)][:500] if isinstance(d.get("hangar"), list) else []}
+               "hangar": [h for h in d.get("hangar", []) if isinstance(h, dict)][:500] if isinstance(d.get("hangar"), list) else [],
+               "storage": [x for x in d.get("storage", []) if isinstance(x, dict)][:1000] if isinstance(d.get("storage"), list) else [],
+               "wallet": d.get("wallet") if isinstance(d.get("wallet"), dict) else None}
         with self.ledger_lock:
+            # saved from an out-of-date copy (another device changed it since): refuse, so nothing is lost
+            if d.get("_rev") and str(d["_rev"]) != self.ledger_rev() and os.path.exists(self.ledger_path):
+                raise LedgerConflict("changed on another device")
             if os.path.exists(self.ledger_path):
                 try:
                     os.replace(self.ledger_path, self.ledger_path + ".bak")
@@ -773,6 +846,7 @@ class Market:
             with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(out, f, indent=1)
             os.replace(tmp, self.ledger_path)
+            out["_rev"] = self.ledger_rev()
         return out
 
     # ------------------------------------------------------------------ sending trades to UEX
@@ -923,7 +997,7 @@ class Market:
             for t in r.get("trades", []):
                 when = time.strftime("%Y-%m-%d %H:%M", time.localtime((t.get("ts") or 0) / 1000))
                 total = t.get("amount") if t.get("kind") == "cost" else (t.get("scu") or 0) * (t.get("price") or 0)
-                sign = 1 if t.get("kind") == "sell" else -1
+                sign = 1 if t.get("kind") in ("sell", "store") else -1   # store: what you paid moves into storage
                 w.writerow([n, start, r.get("ship", ""), when, t.get("kind"), t.get("name", t.get("note", "")),
                             t.get("terminalName", ""), t.get("scu", ""), t.get("price", ""), round(sign * (total or 0))])
         return buf.getvalue()
